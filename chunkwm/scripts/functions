@@ -1,0 +1,284 @@
+#!/usr/bin/env bash
+
+# Deprecated
+
+screenshot() {
+
+    dir="/Users/julian/Desktop"
+    name="$(date "+Screen Shot %Y-%m-%d at%l.%M.%S %p")"
+    filename="${dir}/${name}.png"
+    chunkc border::clear
+
+    case "$1" in
+        "fullscreen")
+            case "$2" in
+                "clipboard")  screencapture -mxc "${filename}" ;;
+                "")           screencapture -mx "${filename}" ;;
+            esac
+        ;;
+
+        "selection")
+            case "$2" in
+                "clipboard")  screencapture -ixc "${filename}" ;;
+                "")           screencapture -ix "${filename}" ;;
+            esac
+        ;;
+
+    esac
+
+}
+
+float() {
+
+    i="$(chunkc tiling::query --window float)"
+    ((i == 0)) && chunkc tiling::window --toggle float
+    case "$1" in
+        "left")     chunkc tiling::window --grid-layout 1:2:0:0:1:1 ;;
+        "right")    chunkc tiling::window --grid-layout 1:2:1:0:1:1 ;;
+        "down")     chunkc tiling::window --grid-layout 4:4:1:1:2:2 ;;
+        "up")       chunkc tiling::window --grid-layout 1:1:0:0:1:1 ;;
+    esac
+
+}
+
+resize() {
+
+    case "$1" in
+        "left")
+            chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge west
+            chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge east
+        ;;
+
+        "right")
+            chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge east
+            chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge west
+        ;;
+
+        "down")
+            chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge south
+            chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge north
+        ;;
+
+        "up")
+            chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge north
+            chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge south
+        ;;
+        
+    esac
+
+
+}
+
+open_iTerm2() {
+
+    if ! pgrep -f "iTerm" > /dev/null; then
+        open "/Applications/iTerm.app" 
+    else
+        osascript -e 'tell application "iTerm2" to create window with default profile' > /dev/null
+        if (($? == 1)); then
+            i=("$(pgrep -f "iTerm")")
+            while read -r j; do
+                kill -9 "$j"
+            done < <(printf "%s\\n" "${i[@]}")
+            open "/Applications/iTerm.app" 
+        fi
+    fi
+
+}
+
+restart() {
+
+    osascript -e 'display notification "Restarting chunkwm" with title "chunkwm" sound name "default"'
+    brew services restart chunkwm
+
+}
+
+show() {
+
+    get_cpu() {
+
+        cpu="$(sysctl -n machdep.cpu.brand_string)"
+        cores="$(sysctl -n hw.logicalcpu_max)"
+        cpu="${cpu/@/(${cores}) @}"
+
+        load="$(sysctl -n vm.loadavg)"
+        load="${load/' }'}"
+        load="${load/'{ '}"
+
+        cpu_usage="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
+        cpu_usage="$((${cpu_usage/\.*} / ${cores:-1}))%"
+
+        temp="$($(which osx-cpu-temp))"
+        fan="$($(which istats) fan --value-only | awk 'NR==2{print;exit}')"
+        fan="${fan// }RPM"
+
+        strip() {
+        
+            case "$2" in
+                "0")    unset "$1" ;;
+                *)      printf "%s" "$2${1:0:1} " ;;
+            esac
+        
+        }
+
+        boot="$(sysctl -n kern.boottime)"
+        boot="${boot/'{ sec = '}"
+        boot="${boot/,*}"
+        seconds="$(($(date +%s) - boot))"
+
+        days="$(strip days $((seconds / 60 / 60 / 24)))"
+        hours="$(strip hours $((seconds / 60 / 60 % 24)))"
+        mins="$(strip mins $((seconds / 60 % 60)))"
+        secs="$(strip secs $((seconds % 60 % 60 % 24)))"
+        uptime="${days}${hours}${mins}${secs}"
+        uptime="Uptime: ${uptime}"
+
+        subtitle="Load avg: ${load} | ${cpu_usage} | ${temp} | ${fan}"
+        ((${#subtitle} >= 50)) && subtitle="Load: ${load} | ${cpu_usage} | ${temp} | ${fan}"
+        ((${#subtitle} >= 50)) && subtitle="${load} | ${cpu_usage} | ${temp} | ${fan}"
+
+        osascript -e "display notification \"${uptime}\" with title \"${cpu}\" subtitle \"${subtitle}\""
+
+    }
+
+    get_mem() {
+
+        vm_stat_cache="$(vm_stat)"
+        mem_total="$(($(sysctl -n hw.memsize) / 1024 / 1024))"
+        mem_wired="$(awk '/wired/ { print $4 }' <<< "${vm_stat_cache}")"
+        mem_active="$(awk '/active / { printf $3 }' <<< "${vm_stat_cache}")"
+        mem_compressed="$(awk '/occupied/ { printf $5 }' <<< "${vm_stat_cache}")"
+        mem_used="$(((${mem_wired//.} + ${mem_active//.} + ${mem_compressed//.}) * 4 / 1024))"
+        memoryM="${mem_used}MiB / ${mem_total}MiB"
+
+        mem_total="$(awk -v a=${mem_total} 'BEGIN {printf "%2.0f", a / 1024}')"
+        mem_used="$(awk -v a=${mem_used} 'BEGIN {printf "%2.2f", a / 1024}')"
+        memoryG="${mem_used}GiB / ${mem_total}GiB"
+
+        osascript -e "display notification \"${memoryG}\" with title \"Memory\" subtitle \"${memoryM}\""
+
+    }
+
+    get_song() {
+
+        cmus_remote="/usr/local/bin/cmus-remote"
+
+        determine_state() {
+            case "$1" in
+                "paused"|0)     paused="$2" ;;
+                "playing"|1)    playing="$2" ;;
+            esac
+        }
+
+        check_app_state() {
+
+            apps=(Spotify iTunes cmus)
+            for i in "${apps[@]}"; do
+        
+                if [[ "$i" == "cmus" ]]; then
+                    if pgrep -x "cmus" > /dev/null; then
+                        app_state="true"
+                        cmus_cache="$(${cmus_remote} -Q)"
+                        app_playing="$(awk '/status/ { print $2 }' <<< "${cmus_cache}")"
+                        determine_state "$app_playing" "$i"
+                    fi
+                else
+                    if ! app_state="$(osascript -e "application \"$i\" is running")"; then
+                        exit
+                    fi
+                    if [[ "$app_state" == "true" && -z "$track" ]]; then
+                        app_playing="$(osascript -e "tell application \"$i\" to player state as string")"
+                        determine_state "$app_playing" "$i"
+                    fi
+                fi
+        
+            done
+
+        }
+
+        get_song_info() {
+
+            if [[ "$app" == "cmus" ]]; then
+
+                track="$(${cmus_remote} -C "format_print %{title}")"
+                artist="$(${cmus_remote} -C "format_print %{artist}")"
+                album="$(${cmus_remote} -C "format_print %{album}")"
+
+            else
+
+                track_cmd="name of current track"
+                artist_cmd="artist of current track"
+                album_cmd="album of current track"
+
+                track="$(osascript -e "tell application \"$app\" to ${track_cmd}")"
+                artist="$(osascript -e "tell application \"$app\" to ${artist_cmd}")"
+                album="$(osascript -e "tell application \"$app\" to ${album_cmd}")"
+
+            fi
+
+        }
+
+        display_notification() {
+
+            if [[ -z "$playing" && -z "$paused" ]]; then
+                osascript -e "display notification \"nothing\" with title \"Now Playing\""
+            else
+    
+                [[ -z "$playing" ]] && app="${paused}"
+                [[ ! -z "$playing" ]] && app="${playing}"
+    
+                get_song_info
+    
+                if [[ "$album" == "$track" ]]; then
+                    osascript -e "display notification \"${artist} - ${track}\" with title \"Now Playing\""
+                else
+                    osascript -e "display notification \"${track}\" with title \"Now Playing\" subtitle \"${artist} - ${album}\""
+                fi
+            fi
+
+        }
+
+        check_app_state
+        display_notification
+
+    }
+
+    get_bat() {
+
+        bat_cache="$(pmset -g batt)"
+
+        bat_state="$(awk '/Now/ { print $4 }' <<< "${bat_cache}")"
+        bat_state="${bat_state#\'}"
+        [[ ${bat_state} != "AC" ]] && bat_state="Discharging"
+        
+        bat_cache="$(grep -E "([0-9]+\\%).*" -o <<< "${bat_cache}")"
+
+        bat_percent="$(awk '{ print $1 }' <<< "${bat_cache}")"
+        bat_percent="${bat_percent/;/ }"
+
+        bat_time="$(awk '{ print $3 }' <<< "${bat_cache}") remaining"
+
+        [[ $bat_time == "(no remaining" ]] && bat_time="Indeterminate"
+        [[ $bat_time == "0:00 remaining" && $bat_state == "AC" ]] && bat_time="Fully charged"
+
+        osascript -e "display notification \"${bat_time}\" with title \"Battery: ${bat_state}\" subtitle \"Percentage: ${bat_percent}\""
+
+    }
+
+    case "$1" in
+        "cpu")  shift; get_cpu ;;
+        "mem")  shift; get_mem ;;
+        "song") shift; get_song ;;
+        "bat")  shift; get_bat ;;
+    esac
+
+}
+
+case "$1" in
+    "screenshot")   shift; screenshot "$@" ;;
+    "float")        shift; float "$@" ;;
+    "resize")       shift; resize "$@" ;;
+    "open_iTerm2")  open_iTerm2 ;;
+    "restart")      restart ;;
+    "show")         shift; show "$@" ;;
+esac

@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+get_args() {
+
+    [[ -z "$1" ]] && exit 1
+    while (($# > 0)); do
+        case "$1" in
+            "-f"|"--fullscreen")  mode="fullscreen" ;;
+            "-s"|"--selection")   mode="selection" ;;
+            "-c"|"--clipboard")   clipboard="true" ;;
+            "-d"|"--dir")         dir="$2"; shift ;;
+        esac
+        shift
+    done
+
+}
+
+check_dir() {
+
+    [[ -z "$dir" ]] && dir="${HOME}/Desktop" && return 0
+    if [[ ! -d "$dir" ]]; then
+        source "${0%/misc*}/display/notify"
+        title="Screenshot failed"
+        subtitle=""
+        content="$dir is not a valid directory"
+        notify "${title}" "${subtitle}" "${content}"
+        exit 1
+    fi
+
+}
+
+take_screenshot() {
+
+    # Create the filename
+    name="$(date "+Screen Shot %Y-%m-%d at%l.%M.%S %p")"
+    filename="${dir}/${name}.png"
+
+    # Remove chunkwm borders
+    chunkc border::clear
+
+    case "${1:0:1}${2:0:1}" in
+        "f")   screencapture -mx "${filename}" ;;
+        "s")   screencapture -ix "${filename}" ;;
+        "ft")  screencapture -mxc "${filename}" ;;
+        "st")  screencapture -ixc "${filename}" ;;
+    esac
+
+}
+
+main() {
+
+    get_args "$@"
+    check_dir
+    take_screenshot "${mode}" "${clipboard}"
+
+}
+
+main "$@"

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Send a notification
+source "${0%/misc*}/display/notify"
+title="chunkwm"
+subtitle=""
+content="Restarting chunkwm"
+notify "${title}" "${subtitle}" "${content}" "default"
+
+# Restart chunkwm
+brew services restart chunkwm

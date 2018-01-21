@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+get_bat_info() {
+    
+    bat_percent="$(awk '{ print $1 }' <<< "${bat_cache_alt}")"
+    bat_percent="${bat_percent/;/}"
+    
+    bat_state="$(awk '/Now/ { print $4 }' <<< "${bat_cache}")"
+    bat_state="${bat_state#\'}"
+    [[ ${bat_state} != "AC" ]] && bat_state="Discharging"
+
+    bat_time="$(awk '{ print $3 }' <<< "${bat_cache_alt}") remaining"
+    [[ $bat_time == "(no remaining" ]] && bat_time="Indeterminate"
+    [[ $bat_time == "0:00 remaining" && $bat_state == "AC" ]] && bat_time="Fully charged"
+
+    bat_cache_2="$(system_profiler SPPowerDataType)"
+    bat_cycles="$(awk '/Cycle Count/ { print $3 }' <<< "${bat_cache_2}")"
+    bat_condition="$(awk '/Condition/ { print $2 }' <<< "${bat_cache_2}")"
+
+}
+
+format_notification() {
+
+    title="Battery: $bat_percent"
+    subtitle="$bat_time | $bat_condition | $bat_cycles cycles"
+    content="$bat_state"
+
+}
+
+main() {
+
+    source "${0%/*}/notify"
+    bat_cache="$(pmset -g batt)"
+    bat_cache_alt="$(grep -E "([0-9]+\\%).*" -o <<< "${bat_cache}")"
+    get_bat_info
+    format_notification
+    notify "${title}" "${subtitle}" "${content}"
+
+}
+
+main

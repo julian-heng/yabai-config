@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+search_index() {
+    count=0
+    while read -r mode; do
+        if [[ "$mode" == "$1" ]]; then
+            printf "%s\\n" "${count}"
+            break
+        fi
+        ((++count))
+    done < <(printf "%s\\n" "${modes[@]}")
+}
+
+get_new_index() {
+
+    index="$1"
+    if ((index == 2)); then
+        index=0
+    else
+        ((++index))
+    fi
+    printf "%s\\n" "${index}"
+
+}
+
+main() {
+
+    source "${0%/misc*}/display/notify"
+
+    modes=( bsp monocle float )
+    current="$(chunkc tiling::query --desktop mode)"
+
+    index="$(search_index "${current}")"
+    index="$(get_new_index "${index}")"
+    
+    title="chunkwm"
+    subtitle=""
+    content="Changing to ${modes[$index]}"
+    notify "${title}" "${subtitle}" "${content}"
+    chunkc tiling::desktop --layout "${modes[$index]}"
+
+}
+
+main

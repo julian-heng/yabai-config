@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+get_cpu() {
+
+    cpu="$(sysctl -n machdep.cpu.brand_string)"
+    export cores
+    cpu="${cpu/@/(${cores}) @}"
+    printf "%s\\n" "${cpu}"
+
+}
+
+get_load() {
+
+    load="$(sysctl -n vm.loadavg)"
+    load="${load/' }'}"
+    load="${load/'{ '}"
+    printf "%s\\n" "${load}"
+
+}
+
+get_cpu_usage() {
+
+    cpu_usage="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
+    cpu_usage="$((${cpu_usage/\.*} / ${cores:-1}))%"
+    printf "%s\\n" "${cpu_usage}"
+
+}
+
+get_temp() {
+
+    temp="$(osx-cpu-temp)"
+    printf "%s\\n" "${temp}"
+
+}
+
+get_fan_speed() {
+
+    fan="$(istats fan --value-only | awk 'NR==2{print;exit}')"
+    fan="${fan// }RPM"
+    printf "%s\\n" "${fan}"
+
+}
+
+get_uptime() {
+
+    strip() {
+        case "$2" in
+            "0")    unset "$1" ;;
+            *)      printf "%s" "$2${1:0:1} " ;;
+        esac
+    }
+
+    boot="$(sysctl -n kern.boottime)"
+    boot="${boot/'{ sec = '}"
+    boot="${boot/,*}"
+    seconds="$(($(date +%s) - boot))"
+    
+    days="$(strip days $((seconds / 60 / 60 / 24)))"
+    hours="$(strip hours $((seconds / 60 / 60 % 24)))"
+    mins="$(strip mins $((seconds / 60 % 60)))"
+    secs="$(strip secs $((seconds % 60 % 60 % 24)))"
+    uptime="${days}${hours}${mins}${secs}"
+    printf "%s\\n" "${uptime}"
+
+}
+
+format_notification() {
+
+    cores="$(sysctl -n hw.logicalcpu_max)"
+    title="$(get_cpu)"
+    subtitle="Load avg: $(get_load) | $(get_cpu_usage) | $(get_temp) | $(get_fan_speed)"
+    ((${#subtitle} >= 50)) && subtitle="${subtitle/ avg/}"
+    ((${#subtitle} >= 50)) && subtitle="${subtitle/Load: /}"
+    content="Uptime: $(get_uptime)"
+
+}
+
+main() {
+
+    source "${0%/*}/notify"
+    format_notification
+    notify "${title}" "${subtitle}" "${content}"
+
+}
+
+main

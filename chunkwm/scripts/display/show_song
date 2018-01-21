@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+
+determine_state() {
+    case "$1" in
+        0|"paused")     paused="$2" ;;
+        1|"playing")    playing="$2" ;;
+    esac
+}
+
+check_app_state() {
+
+    apps=(Spotify iTunes cmus)
+    for i in "${apps[@]}"; do
+
+        if [[ "$i" == "cmus" ]]; then
+            if pgrep -x "cmus" > /dev/null; then
+                app_state="true"
+                cmus_cache="$(${cmus_remote} -Q)"
+                app_playing="$(awk '/status/ { print $2 }' <<< "${cmus_cache}")"
+                determine_state "$app_playing" "$i"
+            fi
+        else
+            if ! app_state="$(osascript -e "application \"$i\" is running")"; then
+                exit
+            fi
+            if [[ "$app_state" == "true" && -z "$track" ]]; then
+                app_playing="$(osascript -e "tell application \"$i\" to player state as string")"
+                determine_state "$app_playing" "$i"
+            fi
+        fi
+
+    done
+
+}
+
+get_song_info() {
+
+    if [[ "$app" == "cmus" ]]; then
+
+        track="$(${cmus_remote} -C "format_print %{title}")"
+        artist="$(${cmus_remote} -C "format_print %{artist}")"
+        album="$(${cmus_remote} -C "format_print %{album}")"
+
+    else
+
+        track_cmd="name of current track"
+        artist_cmd="artist of current track"
+        album_cmd="album of current track"
+
+        track="$(osascript -e "tell application \"$app\" to ${track_cmd}")"
+        artist="$(osascript -e "tell application \"$app\" to ${artist_cmd}")"
+        album="$(osascript -e "tell application \"$app\" to ${album_cmd}")"
+
+    fi
+
+    title="Now Playing on $app"
+    if [[ "$album" == "$track" ]]; then
+        subtitle=""
+        content="${artist} - ${track}"
+    else
+        subtitle="${artist} - ${album}"
+        content="${track}"
+    fi
+
+}
+
+format_notification() {
+
+    
+
+    if [[ -z "$playing" && -z "$paused" ]]; then
+        title="Now Playing"
+        subtitle=""
+        content="nothing"
+    else
+        [[ -z "$playing" ]] && app="${paused}"
+        [[ ! -z "$playing" ]] && app="${playing}"
+        get_song_info
+    fi
+
+}
+
+main() {
+
+    source "${0%/*}/notify"
+    cmus_remote="/usr/local/bin/cmus-remote"
+    check_app_state
+    format_notification
+    notify "${title}" "${subtitle}" "${content}"
+
+}
+
+main

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+notify() {
+    if [[ -z "$4" ]]; then
+        osascript -e "display notification \"${3}\" with title \"${1}\" subtitle \"${2}\""
+    else
+        osascript -e "display notification \"${3}\" with title \"${1}\" subtitle \"${2}\" sound name \"${4}\""
+    fi
+}

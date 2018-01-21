@@ -1,0 +1,148 @@
+# opens iTerm2
+alt - return : /Users/julian/.config/chunkwm/scripts/misc/open_iTerm2
+
+# opens Activity Monitor a la task manager
+shift + alt - escape : open "/Applications/Utilities/Activity Monitor.app"
+
+# opens home folder a la explorer
+fn + alt - e : open /Users/julian
+
+# open downloads folder
+fn + alt - d : open /Users/julian/Downloads
+
+# open dock apps
+fn + alt - 1 : open "/Applications/Safari.app"
+fn + alt - 2 : open "/Applications/FirefoxNightly.app"
+fn + alt - 3 : open "/Applications/Notes.app"
+fn + alt - 4 : open "/Applications/Photos.app"
+fn + alt - 5 : open "/Applications/iTunes.app"
+fn + alt - 6 : open "/Applications/System Preferences.app"
+fn + alt - 7 : open "/Applications/Sublime Text.app"
+fn + alt - 8 : open "/Applications/iTerm.app"
+fn + alt - 9 : open "/Applications/Utilities/Activity Monitor.app"
+fn + alt - 0 : open "/Applications/Discord.app"
+
+# show cpu and mem stats
+fn + lctrl - 1 : /Users/julian/.config/chunkwm/scripts/display/show_cpu
+fn + lctrl - 2 : /Users/julian/.config/chunkwm/scripts/display/show_mem
+
+# show battery info
+fn + lctrl - 3 : /Users/julian/.config/chunkwm/scripts/display/show_bat
+
+# show current song info
+fn + lctrl - 4 : /Users/julian/.config/chunkwm/scripts/display/show_song
+
+# show chunkwm status
+fn + lctrl - 5 : /Users/julian/.config/chunkwm/scripts/display/show_chunkwm_status
+
+# screenshot fix due to border
+cmd + shift - 3 : /Users/julian/.config/chunkwm/scripts/misc/screenshot --fullscreen
+cmd + shift - 4 : /Users/julian/.config/chunkwm/scripts/misc/screenshot --selection
+
+cmd + shift + lctrl - 3 : /Users/julian/.config/chunkwm/scripts/misc/screenshot \
+                                                                    --fullscreen \
+                                                                    --clipboard
+
+cmd + shift + lctrl - 4 : /Users/julian/.config/chunkwm/scripts/misc/screenshot \
+                                                                    --selection \
+                                                                    --clipboard
+
+# ========== chunkwm ===========================
+
+# Legend
+
+# alt - <key> : Navigation
+# shift + alt - <key> : Manipulating windows
+# lctrl + alt - <key> : Resizing windows
+
+# Main navigation keys are WSAD for left hand and
+# IKJL for right hand.
+
+# Arrow keys aren't used because they clash with
+# highlighting words with the alt key.
+
+# ========== Navigation ========================
+
+# change focus
+alt - a : chunkc tiling::window --focus west
+alt - s : chunkc tiling::window --focus south
+alt - w : chunkc tiling::window --focus north
+alt - d : chunkc tiling::window --focus east
+
+alt - j : chunkc tiling::window --focus west
+alt - k : chunkc tiling::window --focus south
+alt - i : chunkc tiling::window --focus north
+alt - l : chunkc tiling::window --focus east
+
+# ========== Moving Windows ====================
+
+# move focused window
+shift + alt - j : chunkc tiling::window --warp west
+shift + alt - k : chunkc tiling::window --warp south
+shift + alt - i : chunkc tiling::window --warp north
+shift + alt - l : chunkc tiling::window --warp east
+
+# move focused container to workspace
+shift + alt - m : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop) || \
+                  chunkc tiling::window --send-to-desktop (chunkc get _last_active_desktop)
+shift + alt - p : chunkc tiling::window --send-to-desktop prev
+shift + alt - n : chunkc tiling::window --send-to-desktop next
+shift + alt - 1 : chunkc tiling::window --send-to-desktop 1
+shift + alt - 2 : chunkc tiling::window --send-to-desktop 2
+shift + alt - 3 : chunkc tiling::window --send-to-desktop 3
+shift + alt - 4 : chunkc tiling::window --send-to-desktop 4
+shift + alt - 5 : chunkc tiling::window --send-to-desktop 5
+shift + alt - 6 : chunkc tiling::window --send-to-desktop 6
+
+# rotate windows clockwise and anticlockwise
+alt - r : chunkc tiling::desktop --rotate 90
+shift + alt - r : chunkc tiling::desktop --rotate 270
+
+# rotate on x and y axis
+shift + alt - x : chunkc tiling::desktop --mirror horizontal
+shift + alt - y : chunkc tiling::desktop --mirror vertical
+
+# ========== Floating Windows ==================
+
+# float / unfloat window
+shift + alt - space : chunkc tiling::window --toggle float
+
+# make floating window fill left-half / right-half of screen
+shift + alt - a : /Users/julian/.config/chunkwm/scripts/window/float left
+shift + alt - d : /Users/julian/.config/chunkwm/scripts/window/float right
+
+# make floating window center
+shift + alt - s : /Users/julian/.config/chunkwm/scripts/window/float down
+
+# make floating window fullscreen
+shift + alt - w : /Users/julian/.config/chunkwm/scripts/window/float up
+
+# ========== Resizing Windows ==================
+
+# resize windows
+lctrl + alt - j : /Users/julian/.config/chunkwm/scripts/window/resize left
+lctrl + alt - k : /Users/julian/.config/chunkwm/scripts/window/resize down
+lctrl + alt - i : /Users/julian/.config/chunkwm/scripts/window/resize up
+lctrl + alt - l : /Users/julian/.config/chunkwm/scripts/window/resize right
+
+# equalize size of windows
+lctrl + alt - 0 : chunkc tiling::desktop --equalize
+
+# ========== Misc ==============================
+
+# hard restart chunkwm
+lctrl + shift + alt - r : /Users/julian/.config/chunkwm/scripts/misc/restart
+
+# make window native fullscreen
+alt - f : chunkc tiling::window --toggle fullscreen
+shift + alt - f : chunkc tiling::window --toggle native-fullscreen
+
+# change layout of desktop
+shift + alt - c : /Users/julian/.config/chunkwm/scripts/misc/change_mode
+
+# set insertion point for focused container
+lctrl + alt - x : chunkc tiling::window --use-insertion-point cancel
+lctrl + alt - a : chunkc tiling::window --use-insertion-point west
+lctrl + alt - s : chunkc tiling::window --use-insertion-point south
+lctrl + alt - w : chunkc tiling::window --use-insertion-point north
+lctrl + alt - d : chunkc tiling::window --use-insertion-point east
