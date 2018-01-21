@@ -110,6 +110,7 @@ Note that the config is setup to MY dock layout. To use yours, you're gonna have
 
 ##### Key Combination
 <kbd>fn</kbd> + <kbd>alt</kbd> + <kbd>num</kbd>
+
 <kbd>fn</kbd> + <kbd>alt</kbd> + <kbd>alpha</kbd>
 
 ```
@@ -129,8 +130,11 @@ Click [here](chunkwm/scripts/misc/screenshot) to view the script
 
 ##### Key Combination
 <kbd>command</kbd> + <kbd>shift</kbd> + <kbd>3</kbd>
+
 <kbd>command</kbd> + <kbd>shift</kbd> + <kbd>4</kbd>
+
 <kbd>command</kbd> + <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>3</kbd>
+
 <kbd>command</kbd> + <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>4</kbd>
 
 ```
