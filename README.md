@@ -85,6 +85,7 @@ $ rm -rf ./chunkwm-config
 #### Show information
 ##### Description
 Uses `osascript` to show information like CPU, memory, battery, etc. The CPU script requires [osx-cpu-temp](https://github.com/lavoiesl/osx-cpu-temp) and [iStats](https://github.com/Chris911/iStats) installed. The song script supports iTunes, Spotify and cmus.
+
 Click [here](chunkwm/scripts/display) to view the script folder
 
 ##### Key Combination
@@ -126,6 +127,7 @@ fn + alt - 4 : open "/Applications/Photos.app"
 #### Screenshots
 ##### Description
 Due to the selection screenshot only selecting the border of the active window and not the actual window, we would have to make a bash script to disable borders before taking a screenshot.
+
 Click [here](chunkwm/scripts/misc/screenshot) to view the script
 
 ##### Key Combination
@@ -146,7 +148,8 @@ cmd + shift + lctrl - 4 : /path/to/screenshot/script  --selection --clipboard
 
 #### Launch iTerm2
 ##### Description
-Launches iTerm2 using like in i3-wm. 
+Launches iTerm2 using like in i3-wm.
+
 Click [here](chunkwm/scripts/misc/open_iTerm2) to view the script
 
 ##### Key Combination
