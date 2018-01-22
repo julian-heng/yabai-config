@@ -66,6 +66,7 @@ chunkc tiling::rule --owner \"Calculator\" --state float
 chunkc tiling::rule --owner \"Dictionary\" --state float
 chunkc tiling::rule --owner \"mpv\" --state float
 chunkc tiling::rule --owner \"Spek\" --state float
+chunkc tiling::rule --owner \"The Unarchiver\" --state float
 chunkc tiling::rule --owner \"Audacity\" --state tile
 
 # Virtual machines apps
