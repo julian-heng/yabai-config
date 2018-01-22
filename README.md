@@ -15,11 +15,9 @@ $ rm -rf ./chunkwm-config
 ## Keyboard shortcuts
 ### chunkwm
 #### Changing focus
+<kbd>alt</kbd> + <kbd>wasd</kbd>
 
-| Hand       | Key Combination                  |
-|------------|----------------------------------|
-| Left hand  | <kbd>alt</kbd> + <kbd>wasd</kbd> |
-| Right hand | <kbd>alt</kbd> + <kbd>ijkl</kbd> |
+<kbd>alt</kbd> + <kbd>ijkl</kbd>
 
 #### Resize windows
 
