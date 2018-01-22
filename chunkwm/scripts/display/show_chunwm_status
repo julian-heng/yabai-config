@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-source "${0%/*}/notify"
-
-title="chunkwm"
-subtitle="Mode: $(chunkc tiling::query --desktop mode)"
-content="Desktop: $(chunkc tiling::query --desktop id)"
-
-notify "$title" "$subtitle" "$content"
