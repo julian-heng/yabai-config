@@ -26,7 +26,7 @@ get_bat_info() {
 
 format_notification() {
 
-    title="Battery: ${bat_percent}"
+    title="Battery (${bat_percent})"
     subtitle="${bat_time} | ${bat_condition} | ${bat_cycles} cycles"
     content="${bat_state}"
 
