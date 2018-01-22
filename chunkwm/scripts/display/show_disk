@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+get_disk() {
+
+    read -r disk_name \
+            disk_mount \
+            disk_capacity \
+            disk_used \
+            < <(awk '/disk1s1/ { print $1, $6, $2, $3 }' <<< "$(df -P -k)")
+
+    disk_capacity="$(awk -v a="${disk_capacity}" 'BEGIN {printf "%2.2f", a / 1024 / 1024}')"
+    disk_used="$(awk -v a="${disk_used}" 'BEGIN {printf "%2.2f", a / 1024 / 1024}')"
+    disk_percent="$(awk -v a="${disk_capacity}" -v b="${disk_used}" 'BEGIN {printf "%2.2f", b / a * 100}')"
+
+}
+
+main() {
+
+    source "${0%/*}/notify"
+    get_disk
+    title="Disk (${disk_mount})"
+    subtitle="${disk_used}GiB | ${disk_capacity}GiB (${disk_percent}%)"
+    content="${disk_name}"
+    notify "${title}" "${subtitle}" "${content}"
+
+}
+
+main
