@@ -29,11 +29,14 @@ fn + lctrl - 2 : /Users/julian/.config/chunkwm/scripts/display/show_mem
 # show battery info
 fn + lctrl - 3 : /Users/julian/.config/chunkwm/scripts/display/show_bat
 
-# show current song info
-fn + lctrl - 4 : /Users/julian/.config/chunkwm/scripts/display/show_song
+# show disk usage
+fn + lctrl - 4 : /Users/julian/.config/chunkwm/scripts/display/show_disk
 
 # show chunkwm status
 fn + lctrl - 5 : /Users/julian/.config/chunkwm/scripts/display/show_chunkwm_status
+
+# show current song info
+fn + lctrl - 6 : /Users/julian/.config/chunkwm/scripts/display/show_song
 
 # screenshot fix due to border
 cmd + shift - 3 : /Users/julian/.config/chunkwm/scripts/misc/screenshot --fullscreen
