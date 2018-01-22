@@ -92,9 +92,9 @@ Click [here](chunkwm/scripts/display) to view the script folder
 <kbd>fn</kbd> + <kbd>lctrl</kbd> + <kbd>num</kbd>
 
 ##### Screenshots
-<img width="378" height="97" src="screenshots/cpu_notify.png?raw=true"><img width="378" height="97" src="screenshots/bat_notify.png?raw=true">
-<img width="378" height="97" src="screenshots/mem_notify.png?raw=true"><img width="378" height="97" src="screenshots/song_notify.png?raw=true">
-<img width="378" height="97" src="screenshots/chunkwm_notify.png?raw=true">
+<img width="378" height="97" src="screenshots/cpu_notify.png?raw=true"><img width="378" height="97" src="screenshots/mem_notify.png?raw=true">
+<img width="378" height="97" src="screenshots/bat_notify.png?raw=true"><img width="378" height="97" src="screenshots/disk_notify.png?raw=true">
+<img width="378" height="97" src="screenshots/chunkwm_notify.png?raw=true"><img width="378" height="97" src="screenshots/song_notify.png?raw=true">
 
 ```
 fn + lctrl - 1 : /path/to/script
