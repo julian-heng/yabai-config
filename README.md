@@ -3,6 +3,11 @@ My personal chunkwm and skhd configs and scripts
 
 ## Installing
 ```sh
+# Remove previous configs
+$ rm -rf "${HOME}/.config/"{chunkwm,skhd}
+$ rm -f "${HOME}"/.{chunkwmrc,skhdrc}
+
+# Install configs
 $ git clone https://github.com/Julian-Heng/chunkwm-config.git
 $ mkdir "${HOME}/.config/"{chunkwm,skhd}
 $ cp ./chunkwm-config/chunkwm/* "${HOME}/.config/chunkwm"
