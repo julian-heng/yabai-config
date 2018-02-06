@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+# ====== Variables =============================
+
+gaps_top="0"
+gaps_bottom="0"
+gaps_left="0"
+gaps_right="0"
+gaps_inner="0"
+
+preselect_border_color="9320a2"
+focused_border_color="2d74da"
+
 # ====== Core settings =========================
 
 chunkc core::log_level error
@@ -10,11 +21,11 @@ chunkc core::hotload 1
 
 chunkc set global_desktop_mode           bsp
 
-chunkc set global_desktop_offset_top     0
-chunkc set global_desktop_offset_bottom  0
-chunkc set global_desktop_offset_left    0
-chunkc set global_desktop_offset_right   0
-chunkc set global_desktop_offset_gap     0
+chunkc set global_desktop_offset_top     "${gaps_top}"
+chunkc set global_desktop_offset_bottom  "${gaps_bottom}"
+chunkc set global_desktop_offset_left    "${gaps_left}"
+chunkc set global_desktop_offset_right   "${gaps_right}"
+chunkc set global_desktop_offset_gap     "${gaps_inner}"
 
 chunkc set desktop_padding_step_size     10.0
 chunkc set desktop_gap_step_size         5.0
@@ -32,17 +43,17 @@ chunkc set window_float_next             0
 chunkc set window_float_center           1
 chunkc set window_region_locked          1
 
-chunkc set mouse_modifier                \"alt fn\"
+chunkc set mouse_modifier                \"fn\"
 
-chunkc set preselect_border_color        0xff9320a2x
+chunkc set preselect_border_color        "0xff${preselect_border_color}"
 chunkc set preselect_border_width        5
 chunkc set preselect_border_radius       0
 
 # ====== Border settings =======================
 
-chunkc set focused_border_color          0xff1f57a4
-chunkc set focused_border_width          6
-chunkc set focused_border_radius         6
+chunkc set focused_border_color          "0xff${focused_border_color}"
+chunkc set focused_border_width          5
+chunkc set focused_border_radius         0
 chunkc set focused_border_skip_floating  1
 
 # ====== Load Plugins =========================
@@ -67,12 +78,13 @@ chunkc tiling::rule --owner \"Dictionary\" --state float
 chunkc tiling::rule --owner \"mpv\" --state float
 chunkc tiling::rule --owner \"Spek\" --state float
 chunkc tiling::rule --owner \"The Unarchiver\" --state float
-chunkc tiling::rule --owner \"Audacity\" --state tile
+chunkc tiling::rule --owner \"Transmission\" --state float
+chunkc tiling::rule --owner \"Disk Inventory X\" --state float
 
 # Virtual machines apps
 chunkc tiling::rule --owner \"Parallels Desktop\" --state float
 chunkc tiling::rule --owner \"Parallels Desktop\" --name \" \" --state float
-chunkc tiling::rule --owner \"VirtualBox\" --state float
+chunkc tiling::rule --owner \"VirtualBox\" --name \"Oracle VM VirtualBox Manager\" --state float
 
 # Safari preferences window
 # chunkc tiling::rule --owner \"Safari\" --name \"General\" --state float

@@ -54,7 +54,7 @@ get_uptime() {
     boot="${boot/'{ sec = '}"
     boot="${boot/,*}"
     seconds="$(($(date +%s) - boot))"
-    
+
     days="$(strip days $((seconds / 60 / 60 / 24)))"
     hours="$(strip hours $((seconds / 60 / 60 % 24)))"
     mins="$(strip mins $((seconds / 60 % 60)))"
@@ -75,11 +75,82 @@ format_notification() {
 
 }
 
+get_model() {
+
+    model="$(sysctl -n hw.model)"
+    icon_path="/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources"
+
+    case "$model" in
+        "MacBook1,1"| \
+        "MacBook2,1"| \
+        "MacBook3,1"| \
+        "MacBook4,1"| \
+        "MacBook5,2")       icon_path="${icon_path}/com.apple.macbook-white.icns" ;;
+        "MacBook6,1"|\
+        "MacBook7,1")       icon_path="${icon_path}/com.apple.macbook-unibody-plastic.icns" ;;
+        "MacBook5,1")       icon_path="${icon_path}/com.apple.macbook-unibody.icns" ;;
+        "MacBook8,1"| \
+        "MacBook9,1"| \
+        "MacBook10,1")      icon_path="${icon_path}/com.apple.macbook-retina-silver.icns" ;;
+        "MacBookAir1,1"| \
+        "MacBookAir2,1")    icon_path="${icon_path}/com.apple.macbookair.icns" ;;
+        "MacBookAir"*)
+            case "${model:12:1}" in
+                "1") icon_path="${icon_path}/com.apple.macbookair-11-unibody.icns" ;;
+                "2") icon_path="${icon_path}/com.apple.macbookair-13-unibody.icns" ;;
+            esac
+        ;;
+        "MacBookPro1,1"| \
+        "MacBookPro2,2"| \
+        "MacBookPro3,1"| \
+        "MacBookPro4,1") icon_path="${icon_path}/com.apple.macbookpro-15.icns" ;;
+        "MacBookPro1,2"| \
+        "MacBookPro2,1") icon_path="${icon_path}/com.apple.macbookpro-17.icns" ;;
+        "MacBookPro"*)
+            case "${model:10:4}" in
+                "5,2"| \
+                "6,1"| \
+                "8,3") icon_path="${icon_path}/com.apple.macbookpro-17-unibody.icns" ;;
+                "5,1"| \
+                "5,3"| \
+                "5,4"| \
+                "6,2"| \
+                "8,2"| \
+                "9,1") icon_path="${icon_path}/com.apple.macbookpro-15-unibody.icns" ;;
+                "5,5"| \
+                "7,1"| \
+                "8,1"| \
+                "9,2") icon_path="${icon_path}/com.apple.macbookpro-13-unibody.icns" ;;
+                "10,1"| \
+                "11,2"| \
+                "11,3"| \
+                "11,2"| \
+                "11,3"| \
+                "11,4"| \
+                "11,5") icon_path="${icon_path}/com.apple.macbookpro-15-retina-display.icns" ;;
+                "10,2"| \
+                "11,1"| \
+                "12,1") icon_path="${icon_path}/com.apple.macbookpro-13-retina-display.icns" ;;
+                *)
+                    case "${model:13:4}" in
+                        "1") icon_path="${icon_path}/com.apple.macbookpro-13-retina-usbc-silver.icns" ;;
+                        "2") icon_path="${icon_path}/com.apple.macbookpro-13-retina-touchid-silver.icns" ;;
+                        "3") icon_path="${icon_path}/com.apple.macbookpro-15-retina-touchid-silver.icns" ;;
+                    esac
+                ;;
+            esac
+        ;;
+    esac
+    printf "%s\\n" "${icon_path}"
+}
+
 main() {
 
-    source "${0%/*}/notify"
     format_notification
-    notify "${title}" "${subtitle}" "${content}"
+    terminal-notifier -title "${title:-}" \
+                      -subtitle "${subtitle:-}" \
+                      -message "${content:-}" \
+                      #-appIcon "$(get_model)"
 
 }
 

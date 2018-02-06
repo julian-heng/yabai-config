@@ -1,9 +1,46 @@
 #!/usr/bin/env bash
 
-source "${0%/*}/notify"
+check_gaps() {
 
-title="chunkwm"
-subtitle="Mode: $(chunkc tiling::query --desktop mode)"
-content="Desktop: $(chunkc tiling::query --desktop id)"
+    read -r gaps_top \
+            gaps_bottom \
+            gaps_left \
+            gaps_right \
+            gaps_inner \
+            < \
+            <(awk -F'=' '/_top/ { a=$2 }
+                        /_bottom/ { b=$2 }
+                        /_left/ { c=$2 }
+                        /_right/ { d=$2 }
+                        /_inner/ { print a, b, c, d, $2 }' \
+                        < \
+                        "${HOME}/.chunkwmrc")
 
-notify "${title}" "${subtitle}" "${content}"
+    ((${gaps_top//\"/} > 0)) && return 1
+    ((${gaps_bottom//\"/} > 0)) && return 1
+    ((${gaps_left//\"/} > 0)) && return 1
+    ((${gaps_right//\"/} > 0)) && return 1
+    ((${gaps_inner//\"/} > 0)) && return 1
+    return 0
+
+}
+
+main() {
+
+    if check_gaps; then
+        gaps="No gaps"
+    else
+        gaps="gaps"
+    fi
+
+    title="$(chunkwm --version)"
+    subtitle="Mode: $(chunkc tiling::query --desktop mode) | ${gaps}"
+    content="Desktop: $(chunkc tiling::query --desktop id)"
+
+    terminal-notifier -title "${title:-}" \
+                      -subtitle "${subtitle:-}" \
+                      -message "${content:-}"
+
+}
+
+main

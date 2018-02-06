@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+check="$(defaults read com.apple.finder CreateDesktop)"
+icon_path="/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/FinderIcon.icns"
+title="Finder"
+
+if ((check == 1)); then
+    content="Hiding desktop icons"
+    defaults write com.apple.finder CreateDesktop -bool false
+else
+    content="Showing desktop icons"
+    defaults write com.apple.finder CreateDesktop -bool true
+fi
+
+terminal-notifier -title "${title:-}" \
+                  -subtitle "${subtitle:-}" \
+                  -message "${content:-}" \
+                  -appIcon "${icon_path}" \
+                  -sound default
+
+killall Finder

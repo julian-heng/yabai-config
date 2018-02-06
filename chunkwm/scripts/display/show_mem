@@ -44,9 +44,10 @@ format_notification() {
 
 main() {
 
-    source "${0%/*}/notify"
     format_notification
-    notify "${title}" "${subtitle}" "${content}"
+    terminal-notifier -title "${title:-}" \
+                      -subtitle "${subtitle:-}" \
+                      -message "${content:-}"
 
 }
 

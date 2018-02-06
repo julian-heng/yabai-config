@@ -38,6 +38,9 @@ fn + lctrl - 5 : /Users/julian/.config/chunkwm/scripts/display/show_chunkwm_stat
 # show current song info
 fn + lctrl - 6 : /Users/julian/.config/chunkwm/scripts/display/show_song
 
+# show / hide desktop icons
+fn + lctrl - d : /Users/julian/.config/chunkwm/scripts/misc/show_desktop_icons
+
 # screenshot fix due to border
 cmd + shift - 3 : /Users/julian/.config/chunkwm/scripts/misc/screenshot --fullscreen
 cmd + shift - 4 : /Users/julian/.config/chunkwm/scripts/misc/screenshot --selection
@@ -55,8 +58,9 @@ cmd + shift + lctrl - 4 : /Users/julian/.config/chunkwm/scripts/misc/screenshot 
 # Legend
 
 # alt - <key> : Navigation
-# shift + alt - <key> : Manipulating windows
-# lctrl + alt - <key> : Resizing windows
+# shift + alt - <key>           : Moving / manipulating windows
+# lctrl + alt - <key>           : Resizing windows
+# lctrl + shift + alt - <key>   : chunkwm settings
 
 # Main navigation keys are WSAD for left hand and
 # IKJL for right hand.
@@ -142,6 +146,9 @@ shift + alt - f : chunkc tiling::window --toggle native-fullscreen
 
 # change layout of desktop
 shift + alt - c : /Users/julian/.config/chunkwm/scripts/misc/change_mode
+
+# increase / decrease gaps
+lctrl + shift + alt - g : /Users/julian/.config/chunkwm/scripts/misc/gaps 20 20 10 10 15
 
 # set insertion point for focused container
 lctrl + alt - x : chunkc tiling::window --use-insertion-point cancel

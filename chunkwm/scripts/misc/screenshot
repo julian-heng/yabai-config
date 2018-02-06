@@ -19,11 +19,15 @@ check_dir() {
 
     [[ -z "$dir" ]] && dir="${HOME}/Desktop" && return 0
     if [[ ! -d "$dir" ]]; then
-        source "${0%/misc*}/display/notify"
         title="Screenshot failed"
         subtitle=""
         content="$dir is not a valid directory"
-        notify "${title}" "${subtitle}" "${content}"
+        icon_path="/Applications/Utilities/Grab.app/Contents/Resources/AppIcon.icns"
+        terminal-notifier -title "${title:-}" \
+                          -subtitle "${subtitle:-}" \
+                          -message "${content:-}" \
+                          -appIcon "${icon_path}"
+
         exit 1
     fi
 

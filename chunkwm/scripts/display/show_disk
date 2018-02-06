@@ -16,12 +16,15 @@ get_disk() {
 
 main() {
 
-    source "${0%/*}/notify"
     get_disk
     title="Disk (${disk_mount})"
     subtitle="${disk_used}GiB | ${disk_capacity}GiB (${disk_percent}%)"
     content="${disk_name}"
-    notify "${title}" "${subtitle}" "${content}"
+    icon_path="/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/Internal.icns"
+    terminal-notifier -title "${title:-}" \
+                      -subtitle "${subtitle:-}" \
+                      -message "${content:-}" \
+                      -appIcon "${icon_path}"
 
 }
 

@@ -79,10 +79,13 @@ format_notification() {
 
 main() {
 
-    source "${0%/*}/notify"
     check_app_state
     format_notification
-    notify "${title}" "${subtitle}" "${content}"
+    icon_path="/Applications/iTunes.app/Contents/Resources/iTunes.icns"
+    terminal-notifier -title "${title:-}" \
+                      -subtitle "${subtitle:-}" \
+                      -message "${content:-}" \
+                      -appIcon "${icon_path}"
 
 }
 
