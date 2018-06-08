@@ -1,3 +1,5 @@
+Due to [Microsoft's acquisition of GitHub](http://www.tfir.io/microsoft-acquires-github-for-7-5-billion), this repo will be a mirror of the same repo on [GitLab](https://gitlab.com/julian-heng/chunkwm-config). Please do not send any issues or pull request on GitHub as they will be ignored.
+
 # chunkwm and skhd configs
 My personal chunkwm and skhd configs and scripts
 
