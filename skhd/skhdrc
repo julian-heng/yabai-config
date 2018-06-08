@@ -1,5 +1,5 @@
 # opens iTerm2
-alt - return : "${HOME}"/.config/chunkwm/scripts/misc/open_iTerm2
+alt - return : "${HOME}"/.config/chunkwm/scripts/misc/open_iTerm2.sh
 
 # opens Activity Monitor a la task manager
 shift + alt - escape : open "/Applications/Utilities/Activity Monitor.app"
@@ -8,7 +8,7 @@ shift + alt - escape : open "/Applications/Utilities/Activity Monitor.app"
 fn + alt - e : open "${HOME}"
 
 # open downloads folder
-fn + alt - d : open "${HOME}"/Downloads
+fn + alt - d : open "${HOME}/Downloads"
 
 # open dock apps
 fn + alt - 1 : open "/Applications/Safari.app"
@@ -23,33 +23,33 @@ fn + alt - 9 : open "/Applications/Utilities/Activity Monitor.app"
 fn + alt - 0 : open "/Applications/Discord.app"
 
 # show cpu and mem stats
-fn + lctrl - 1 : "${HOME}"/.config/chunkwm/scripts/display/show_cpu
-fn + lctrl - 2 : "${HOME}"/.config/chunkwm/scripts/display/show_mem
+fn + lctrl - 1 : "${HOME}"/.config/chunkwm/scripts/display/show_cpu.sh
+fn + lctrl - 2 : "${HOME}"/.config/chunkwm/scripts/display/show_mem.sh
 
 # show battery info
-fn + lctrl - 3 : "${HOME}"/.config/chunkwm/scripts/display/show_bat
+fn + lctrl - 3 : "${HOME}"/.config/chunkwm/scripts/display/show_bat.sh
 
 # show disk usage
-fn + lctrl - 4 : "${HOME}"/.config/chunkwm/scripts/display/show_disk
+fn + lctrl - 4 : "${HOME}"/.config/chunkwm/scripts/display/show_disk.sh disk1s1
 
 # show chunkwm status
-fn + lctrl - 5 : "${HOME}"/.config/chunkwm/scripts/display/show_chunkwm_status
+fn + lctrl - 5 : "${HOME}"/.config/chunkwm/scripts/display/show_chunkwm_status.sh
 
 # show current song info
-fn + lctrl - 6 : "${HOME}"/.config/chunkwm/scripts/display/show_song
+fn + lctrl - 6 : "${HOME}"/.config/chunkwm/scripts/display/show_song.sh
 
 # show / hide desktop icons
-fn + lctrl - d : "${HOME}"/.config/chunkwm/scripts/misc/show_desktop_icons
+fn + lctrl - d : "${HOME}"/.config/chunkwm/scripts/misc/show_desktop_icons.sh
 
 # screenshot fix due to border
-cmd + shift - 3 : "${HOME}"/.config/chunkwm/scripts/misc/screenshot --fullscreen
-cmd + shift - 4 : "${HOME}"/.config/chunkwm/scripts/misc/screenshot --selection
+cmd + shift - 3 : "${HOME}"/.config/chunkwm/scripts/misc/screenshot.sh --fullscreen
+cmd + shift - 4 : "${HOME}"/.config/chunkwm/scripts/misc/screenshot.sh --selection
 
-cmd + shift + lctrl - 3 : "${HOME}"/.config/chunkwm/scripts/misc/screenshot \
+cmd + shift + lctrl - 3 : "${HOME}"/.config/chunkwm/scripts/misc/screenshot.sh \
                                                                     --fullscreen \
                                                                     --clipboard
 
-cmd + shift + lctrl - 4 : "${HOME}"/.config/chunkwm/scripts/misc/screenshot \
+cmd + shift + lctrl - 4 : "${HOME}"/.config/chunkwm/scripts/misc/screenshot.sh \
                                                                     --selection \
                                                                     --clipboard
 
@@ -115,22 +115,22 @@ shift + alt - y : chunkc tiling::desktop --mirror vertical
 shift + alt - space : chunkc tiling::window --toggle float
 
 # make floating window fill left-half / right-half of screen
-shift + alt - a : "${HOME}"/.config/chunkwm/scripts/window/float left
-shift + alt - d : "${HOME}"/.config/chunkwm/scripts/window/float right
+shift + alt - a : "${HOME}"/.config/chunkwm/scripts/window/float.sh left
+shift + alt - d : "${HOME}"/.config/chunkwm/scripts/window/float.sh right
 
 # make floating window center
-shift + alt - s : "${HOME}"/.config/chunkwm/scripts/window/float down
+shift + alt - s : "${HOME}"/.config/chunkwm/scripts/window/float.sh down
 
 # make floating window fullscreen
-shift + alt - w : "${HOME}"/.config/chunkwm/scripts/window/float up
+shift + alt - w : "${HOME}"/.config/chunkwm/scripts/window/float.sh up
 
 # ========== Resizing Windows ==================
 
 # resize windows
-lctrl + alt - j : "${HOME}"/.config/chunkwm/scripts/window/resize left
-lctrl + alt - k : "${HOME}"/.config/chunkwm/scripts/window/resize down
-lctrl + alt - i : "${HOME}"/.config/chunkwm/scripts/window/resize up
-lctrl + alt - l : "${HOME}"/.config/chunkwm/scripts/window/resize right
+lctrl + alt - j : "${HOME}"/.config/chunkwm/scripts/window/resize.sh left
+lctrl + alt - k : "${HOME}"/.config/chunkwm/scripts/window/resize.sh down
+lctrl + alt - i : "${HOME}"/.config/chunkwm/scripts/window/resize.sh up
+lctrl + alt - l : "${HOME}"/.config/chunkwm/scripts/window/resize.sh right
 
 # equalize size of windows
 lctrl + alt - 0 : chunkc tiling::desktop --equalize
@@ -138,17 +138,17 @@ lctrl + alt - 0 : chunkc tiling::desktop --equalize
 # ========== Misc ==============================
 
 # hard restart chunkwm
-lctrl + shift + alt - r : "${HOME}"/.config/chunkwm/scripts/misc/restart
+lctrl + shift + alt - r : "${HOME}"/.config/chunkwm/scripts/misc/restart.sh
 
 # make window native fullscreen
 alt - f : chunkc tiling::window --toggle fullscreen
 shift + alt - f : chunkc tiling::window --toggle native-fullscreen
 
 # change layout of desktop
-shift + alt - c : "${HOME}"/.config/chunkwm/scripts/misc/change_mode
+shift + alt - c : "${HOME}"/.config/chunkwm/scripts/misc/change_mode.sh
 
 # increase / decrease gaps
-lctrl + shift + alt - g : "${HOME}"/.config/chunkwm/scripts/misc/gaps 20 20 10 10 15
+lctrl + shift + alt - g : "${HOME}"/.config/chunkwm/scripts/misc/gaps.sh 20 20 10 10 15
 
 # set insertion point for focused container
 lctrl + alt - x : chunkc tiling::window --use-insertion-point cancel
