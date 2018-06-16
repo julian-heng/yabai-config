@@ -2,9 +2,9 @@
 
 function main
 {
-    ! { source "${BASH_SOURCE[0]//${0##*/}/}../display/notify.sh" \
-        && source "${BASH_SOURCE[0]//${0##*/}/}../display/format.sh"; } \
-            && exit 1
+    ! { source "${BASH_SOURCE[0]//${0##*/}}../display/notify.sh" && \
+        source "${BASH_SOURCE[0]//${0##*/}}../display/format.sh"; } && \
+            exit 1
 
     title_parts=("chunkwm")
     subtitle_parts=()

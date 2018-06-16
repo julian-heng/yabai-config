@@ -9,40 +9,83 @@ function trim_digits
     esac
 }
 
+function get_mem_cache
+{
+    vm_stat; sysctl vm.swapusage
+}
+
+function get_mem_total
+{
+    : $(($(sysctl -n hw.memsize) / 1024 ** 2))
+    printf "%s" "${_}"
+}
+
+function get_mem_used
+{
+    : "$(awk '
+        /wired/ {a = substr($4, 1, length($4)-1)}
+        /occupied/ {b = substr($5, 1, length($5)-1)}
+        END {printf "%0.0f", ((a + b) * 4) / 1024}' \
+        < <(printf "%s\\n" "$@"))"
+    printf "%s" "${_}"
+}
+
+function get_mem_percent
+{
+    local used
+    local total
+
+    if [[ ! "$1" && ! "$2" ]]; then
+        used="$(get_mem_used "$(get_mem_cache)")"
+        total="$(get_mem_total)"
+    else
+        used="$1"
+        total="$2"
+    fi
+
+    : "$(awk -v a="${used}" -v b="${total}" \
+        'BEGIN {printf "%0.0f", (a / b) * 100}')"
+    printf "%s" "${_}"
+}
+
+function get_swap_used
+{
+    : "$(awk \
+        '/vm/ { print $4 }' < <(printf "%s\\n" "$@"))"
+    : "$(trim_digits "${_/M*}")"
+    printf "%s" "${_}"
+}
+
+function get_swap_total
+{
+    : "$(awk \
+        '/vm/ { print $7 }' < <(printf "%s\\n" "$@"))"
+    : "$(trim_digits "${_/M*}")"
+    printf "%s" "${_}"
+}
+
 function get_mem_info
 {
-    local mem_wired
-    local mem_compressed
     local mem_total
     local mem_used
     local mem_percent
     local swap_total
     local swap_used
 
-    read -r mem_wired \
-            mem_compressed \
+    read -r mem_used \
             swap_total \
             swap_used \
             < <(awk '
-                    /wired/ { a=$4 }
-                    /occupied/ { b=$5 }
-                    /vm/ { c=$4; d=$7 }
+                    /wired/ {a = substr($4, 1, length($4)-1)}
+                    /occupied/ {b = substr($5, 1, length($5)-1)}
+                    /vm/ {c = $4; d = $7}
                     END {
-                        printf "%s %s %s %s", \
-                        a, b, c, d
-                    }' <(vm_stat; sysctl vm.swapusage))
+                        printf "%0.0f %s %s", \
+                        ((a + b) * 4) / 1024, c, d
+                    }' < <(get_mem_cache))
 
     mem_total="$(($(sysctl -n hw.memsize) / 1024 ** 2))"
-    mem_used="$(((${mem_wired//.} + ${mem_compressed//.}) * 4 / 1024))"
-    mem_percent="$(awk \
-                    -v a="${mem_total}" \
-                    -v b="${mem_used}" \
-                        'BEGIN {
-                            percent = b / a * 100
-                            printf "%0.0f", percent
-                        }'
-                    )"
-
+    mem_percent="$(get_mem_percent "${mem_used}" "${mem_total}")"
     swap_total="$(trim_digits "${swap_total/M*}")"
     swap_used="$(trim_digits "${swap_used/M*}")"
 
@@ -56,9 +99,9 @@ function get_mem_info
 
 function main
 {
-    ! { source "${BASH_SOURCE[0]//${0##*/}/}notify.sh" \
-        && source "${BASH_SOURCE[0]//${0##*/}/}format.sh"; } \
-            && exit 1
+    ! { source "${BASH_SOURCE[0]//${0##*/}}notify.sh" && \
+        source "${BASH_SOURCE[0]//${0##*/}}format.sh"; } && \
+            exit 1
 
     IFS=";"\
     read -r mem_percent \
@@ -87,6 +130,5 @@ function main
     notify "${title:-}" "${subtitle:-}" "${message:-}"
 }
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    main "$@"
-fi
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && \
+    main "$@" || :

@@ -13,20 +13,20 @@ function get_current_values
             gaps_left \
             gaps_right \
             gaps_inner \
-            < <(awk -F'=' \
-                    '/_top/ { a=$2 } 
-                    /_bottom/ { b=$2 } 
-                    /_left/ { c=$2 } 
-                    /_right/ { d=$2 } 
-                    /_inner/ { print a, b, c, d, $2 }' \
+            < <(awk -F'=' '
+                    /_top/ {a = $2}
+                    /_bottom/ {b = $2}
+                    /_left/ {c = $2}
+                    /_right/ {d = $2}
+                    /_inner/ {print a, b, c, d, $2}' \
                     "${chunkwmrc}")
 
     printf "%s %s %s %s %s" \
-        "${gaps_top//\"/}" \
-        "${gaps_bottom//\"/}" \
-        "${gaps_left//\"/}" \
-        "${gaps_right//\"/}" \
-        "${gaps_inner//\"/}"
+        "${gaps_top//\"}" \
+        "${gaps_bottom//\"}" \
+        "${gaps_left//\"}" \
+        "${gaps_right//\"}" \
+        "${gaps_inner//\"}"
 }
 
 function set_defaults
@@ -42,20 +42,20 @@ function set_defaults
             default_gaps_left \
             default_gaps_right \
             default_gaps_inner \
-            < \
-            <(awk -F'=' '/_top/ { a=$2 } 
-                        /_bottom/ { b=$2 } 
-                        /_left/ { c=$2 } 
-                        /_right/ { d=$2 } 
-                        /_inner/ { print a, b, c, d, $2 }' \
-                        "${chunkwmrc}.orig")
+            < <(awk -F'=' '
+                    /_top/ {a = $2}
+                    /_bottom/ {b = $2}
+                    /_left/ {c = $2}
+                    /_right/ {d = $2}
+                    /_inner/ {print a, b, c, d, $2}' \
+                    "${chunkwmrc}.orig")
 
     printf "%s %s %s %s %s" \
-        "${default_gaps_top//\"/}" \
-        "${default_gaps_bottom//\"/}" \
-        "${default_gaps_left//\"/}" \
-        "${default_gaps_right//\"/}" \
-        "${default_gaps_inner//\"/}"
+        "${default_gaps_top//\"}" \
+        "${default_gaps_bottom//\"}" \
+        "${default_gaps_left//\"}" \
+        "${default_gaps_right//\"}" \
+        "${default_gaps_inner//\"}"
 }
 
 function restore_defaults
@@ -112,26 +112,30 @@ function change_file
         -v left="gaps_left=\"${3}\"" \
         -v right="gaps_right=\"${4}\"" \
         -v inner="gaps_inner=\"${5}\"" \
-        '/_top=/ { $1=top }
-        /_bottom=/ { $1=bottom }
-        /_left=/ { $1=left }
-        /_right=/ { $1=right }
-        /_inner=/ { $1=inner }; { print }' \
-        "${6}" > "${7}"
+            '/_top=/ {$1 = top}
+            /_bottom=/ {$1 = bottom}
+            /_left=/ { $1 = left}
+            /_right=/ {$1 = right}
+            /_inner=/ {$1 = inner}; {print}' \
+            "${6}" > "${7}"
 }
 
 function main
 {
-    ! { source "${BASH_SOURCE[0]//${0##*/}/}../display/notify.sh" \
-        && source "${BASH_SOURCE[0]//${0##*/}/}../display/format.sh"; } \
-            && exit 1
+    ! { source "${BASH_SOURCE[0]//${0##*/}}../display/notify.sh" && \
+        source "${BASH_SOURCE[0]//${0##*/}}../display/format.sh"; } && \
+            exit 1
 
-    [[ ! "$*" ]] && printf "Needs to have arguments\\n" && exit 1
+    [[ ! "$1" ]] && {
+        printf "%s\\n" "Needs to have arguments"
+        exit 1
+    }
 
     chunkwmrc="${HOME}/.chunkwmrc"
     title_parts=("chunkwm")
 
-    [[ ! -f "$chunkwmrc.orig" ]] && cp "${chunkwmrc}" "${chunkwmrc}.orig"
+    [[ ! -f "$chunkwmrc.orig" ]] && \
+        cp "${chunkwmrc}" "${chunkwmrc}.orig"
     cp "${chunkwmrc}" "${chunkwmrc}.tmp"
 
     read -r current_gaps_top \
@@ -200,9 +204,7 @@ function main
     message="$(format "${message_parts[@]}")"
 
     notify "${title:-}" "${subtitle:-}" "${message:-}"
-
     brew services restart chunkwm
-
     rm "${chunkwmrc}.tmp"
 }
 
