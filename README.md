@@ -100,6 +100,8 @@ Click [here](chunkwm/scripts/display) to view the script folder
 <img width="378" height="97" src="screenshots/cpu_notify.png?raw=true"><img width="378" height="97" src="screenshots/mem_notify.png?raw=true">
 <img width="378" height="97" src="screenshots/bat_notify.png?raw=true"><img width="378" height="97" src="screenshots/disk_notify.png?raw=true">
 <img width="378" height="97" src="screenshots/chunkwm_notify.png?raw=true"><img width="378" height="97" src="screenshots/song_notify.png?raw=true">
+<img width="378" height="97" src="screenshots/summary_notify.png?raw=true"><img width="378" height="97" src="screenshots/summary_simple_notify.png?raw=true">
+<img width="378" height="97" src="screenshots/summary_all_notify.png?raw=true">
 
 ```
 fn + lctrl - 1 : /path/to/script
