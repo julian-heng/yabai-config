@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-resize() {
+function resize
+{
     while [[ "$1" ]]; do
         chunkc tiling::window --use-temporary-ratio "$1" --adjust-window-edge "$2"
         shift; shift

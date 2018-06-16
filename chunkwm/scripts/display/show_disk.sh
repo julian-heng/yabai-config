@@ -1,41 +1,29 @@
 #!/usr/bin/env bash
 # shellcheck disable=1004,1090
 
-function spacify
-{
-    local string="$1"
-    string="${string//:/ }"
-    string="${string:1}"
-    printf "%s" "${string}"
-}
-
 function get_search
 {
     local search="$1"
-    local -a disk_cache
-    mapfile -t disk_cache <<< "${@:2}"
-
-    local count=0
+    local count="0"
     local match="false"
-    local default_disk
 
     if [[ "${search}" ]]; then
-        while [[ "${match}" != "true" ]] && ((count < ${#disk_cache[@]})); do
-            if [[ "${disk_cache[${count}]}" == *"${search}"* ]]; then
+        while [[ "${match}" != "true" ]] && read -r df_line; do
+            if [[ "${df_line}" == *"${search}"* ]]; then
                 match="true"
-                search="${disk_cache[${count}]%% *}"
+                : "${df_line%% *}"
             else
                 ((count++))
             fi
-        done
+        done < <(get_df_output)
     else
-        default_disk="${disk_cache[1]}"
-        default_disk="${default_disk%% *}"
-        search="${default_disk}"
+        match="true"
+        : "$(get_df_output 1)"
+        : "${_%% *}"
     fi
 
     if [[ "${match}" == "true" ]]; then
-        printf "%s" "${search}"
+        printf "%s" "${_}"
     else
         return 1
     fi
@@ -43,20 +31,107 @@ function get_search
 
 function get_df_output
 {
-    local df_line
+    local line
     local -a disk_cache
-
-    while read -r df_line; do
-        [[ "${df_line}" != *"TimeMachine"* ]] && disk_cache+=("${df_line}")
-    done < <(df -P -k)
-    printf "%s\\n" "${disk_cache[@]}"
+    while read -r line; do
+        [[ "${line}" != *"TimeMachine"* ]] && \
+            disk_cache+=("${line}")
+    done < <(df)
+    printf "%s\\n" "${disk_cache[@]:${1:-1}}"
 }
 
-function get_disk
+function get_diskutil_out
 {
-    local -a disk_cache
-    local search
+    while read -r line; do
+        printf "%s\\n" "${line}"
+    done < <(diskutil info "$1")
+}
 
+function get_disk_device
+{
+    : "$(awk '/Device Node/ {print $3}' \
+            < <(printf "%s\\n" "$@"))"
+    printf "%s" "${_}"
+}
+
+function get_disk_name
+{
+    : "$(awk '
+        /Volume Name/ {
+            for (i = 3; i <= NF; i++) {
+                if (a == "")
+                    a = $i
+                else
+                    a = a":"$i
+            }
+        }
+        END {
+            print a
+        }' < <(printf "%s\\n" "$@"))"
+    : "${_//:/ }"
+    printf "%s" "${_}"
+}
+
+function get_disk_part
+{
+    : "$(awk '
+        /File System Personality:/ {
+            for (i = 4; i <= NF; i++) {
+                if (a == "")
+                    a = $i
+                else
+                    a = a":"$i
+            }
+        }
+        END {
+            print a
+        }' < <(printf "%s\\n" "$@"))"
+    : "${_//:/ }"
+    printf "%s" "${_}"
+}
+
+function get_disk_mount
+{
+    : "$(awk '
+        /Mount Point:/ {
+            for (i = 3; i <= NF; i++) {
+                if (a == "")
+                    a = $i
+                else
+                    a = a":"$i
+            }
+        }
+        END {
+            print a
+        }' < <(printf "%s\\n" "$@"))"
+    : "${_//:/ }"
+    printf "%s" "${_}"
+}
+
+function get_disk_capacity
+{
+    : "$(awk '/Volume Total Space/ {printf "%0.2f", ($9 / (2 * (1024 ^ 2)))}' \
+        < <(printf "%s\\n" "$@"))"
+    printf "%s" "${_}"
+}
+
+function get_disk_used
+{
+    : "$(awk '/Volume Used Space/ {printf "%0.2f", ($9 / (2 * (1024 ^ 2)))}' \
+        < <(printf "%s\\n" "$@"))"
+    printf "%s" "${_}"
+}
+
+function get_disk_percent
+{
+    : "$(awk -v a="$1" -v b="$2" \
+        'BEGIN {printf "%0.2f", (a / b) * 100}')"
+    printf "%s" "${_}"
+}
+
+function get_disk_info
+{
+    local search
     local disk_device
     local disk_capacity
     local disk_used
@@ -65,80 +140,67 @@ function get_disk
     local disk_part
     local disk_mount
 
-    disk_cache=("$(get_df_output "$@")")
-    { ! search="$(get_search "$@" "${disk_cache[@]}")"; } && return 1
-
+    ! search="$(get_search "${@:-}")" && return 1
     read -r disk_device \
+            disk_name \
+            disk_part \
+            disk_mount \
             disk_capacity \
             disk_used \
             disk_percent \
-            < <(awk -v disk="${search}" \
-                    '$0 ~ disk { 
-                        a = $1
-                        b = $2 / (1024 ^ 2)
-                        c = $3 / (1024 ^ 2)
-                        d = c / b * 100
-                    }
-                    END {
-                        printf "%s %0.2f %0.2f %0.2f", \
-                        a, b, c, d
-                    }' <<< "${disk_cache[@]}")
-
-    read -r disk_name \
-            disk_part \
-            disk_mount \
             < <(awk '
-                    /Volume Name/ {
-                        a = ""
-                        for(i = 3; i <= NF; i++) {
-                            a = a":"$i
+                    function strloop(a)
+                    {
+                        j = ""
+                        for (i = a; i <= NF; i++) {
+                            if (j == "")
+                                j = $i
+                            else
+                                j = j":"$i
                         }
+                        return j
                     }
-                    /File System Personality:/ {
-                        b = ""
-                        for(i = 4; i <= NF; i++) {
-                            b = b":"$i
-                        }
-                    }
-                    /Mount Point:/ {
-                        c = ""
-                        for(i = 3; i <= NF; i++) {
-                            c = c":"$i
-                        }
-                    }
+                    /Device Node/ {a = $3}
+                    /Volume Name/ {b = strloop(3)}
+                    /File System Personality:/ {c = strloop(4)}
+                    /Mount Point/ {d = strloop(3)}
+                    /Volume Total Space/ {e = $9 / (2 * (1024 ^ 2))}
+                    /Volume Used Space/ {f = $9 / (2 * (1024 ^ 2))}
                     END {
-                        printf "%s %s %s", a, b, c
-                    }' <(diskutil info "${search}"))
+                        printf "%s %s %s %s %0.2f %0.2f %0.2f", \
+                            a, b, c, d, \
+                            e, f, ((f / e) * 100)
+                        }' < <(get_diskutil_out "${search}"))
 
-    disk_name="$(spacify "${disk_name}")"
-    disk_part="$(spacify "${disk_part}")"
-    disk_mount="$(spacify "${disk_mount}")"
+    disk_name="${disk_name//:/ }"
+    disk_part="${disk_part//:/ }"
+    disk_mount="${disk_mount//:/ }"
 
     printf "%s;%s;%s;%s;%s;%s;%s" \
         "${disk_device}" \
-        "${disk_capacity}" \
-        "${disk_used}" \
-        "${disk_percent}" \
         "${disk_name}" \
         "${disk_part}" \
-        "${disk_mount}"
+        "${disk_mount}" \
+        "${disk_capacity}" \
+        "${disk_used}" \
+        "${disk_percent}"
 }
 
 function main
 {
-    ! { source "${BASH_SOURCE[0]//${0##*/}/}notify.sh" \
-        && source "${BASH_SOURCE[0]//${0##*/}/}format.sh"; } \
-            && exit 1
+    ! { source "${BASH_SOURCE[0]//${0##*/}}notify.sh" && \
+        source "${BASH_SOURCE[0]//${0##*/}}format.sh"; } && \
+            exit 1
 
     IFS=";" \
     read -r disk_device \
-            disk_capacity \
-            disk_used \
-            disk_percent \
             disk_name \
             disk_part \
             disk_mount \
-            < <(get_disk "$@")
+            disk_capacity \
+            disk_used \
+            disk_percent \
+            < <(get_disk_info "$@")
 
     [[ "${disk_device}" == "" \
     || "${disk_capacity}" == "0.00" \
@@ -166,6 +228,5 @@ function main
     notify "${title:-}" "${subtitle:-}" "${message:-}"
 }
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    main "$@"
-fi
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && \
+    main "$@" || :

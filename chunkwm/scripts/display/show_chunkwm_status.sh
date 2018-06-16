@@ -8,19 +8,19 @@ function check_gaps
             gaps_left \
             gaps_right \
             gaps_inner \
-            < \
-            <(awk -F'=' '/_top/ { a=$2 }
-                        /_bottom/ { b=$2 }
-                        /_left/ { c=$2 }
-                        /_right/ { d=$2 }
-                        /_inner/ { print a, b, c, d, $2 }' \
-                        "${HOME}/.chunkwmrc")
+            < <(awk -F'=' '
+                    /_top/ { a=$2 }
+                    /_bottom/ { b=$2 }
+                    /_left/ { c=$2 }
+                    /_right/ { d=$2 }
+                    /_inner/ { print a, b, c, d, $2 }' \
+                    "${HOME}/.chunkwmrc")
 
-    ((${gaps_top//\"/} > 0 || \
-      ${gaps_bottom//\"/} > 0 || \
-      ${gaps_left//\"/} > 0 || \
-      ${gaps_right//\"/} > 0 || \
-      ${gaps_inner//\"/} > 0)) \
+    ((${gaps_top//\"} > 0 || \
+      ${gaps_bottom//\"} > 0 || \
+      ${gaps_left//\"} > 0 || \
+      ${gaps_right//\"} > 0 || \
+      ${gaps_inner//\"} > 0)) \
         && return 1
 
     return 0
@@ -28,15 +28,16 @@ function check_gaps
 
 function main
 {
-    ! { source "${BASH_SOURCE[0]//${0##*/}/}notify.sh" \
-        && source "${BASH_SOURCE[0]//${0##*/}/}format.sh"; } \
-            && exit 1
+    ! { source "${BASH_SOURCE[0]//${0##*/}}notify.sh" && \
+        source "${BASH_SOURCE[0]//${0##*/}}format.sh"; } && \
+            exit 1
 
     if check_gaps; then
-        gaps="No gaps"
+        : "No gaps"
     else
-        gaps="gaps"
+        : "gaps"
     fi
+    gaps="${_}"
 
     title_parts=(
         "$(chunkwm --version)"
@@ -58,4 +59,5 @@ function main
     notify "${title:-}" "${subtitle:-}" "${message:-}"
 }
 
-main
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && \
+    main "$@" || :

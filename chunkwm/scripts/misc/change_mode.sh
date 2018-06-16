@@ -7,10 +7,10 @@ function search_index
     local mode
 
     while read -r mode && [[ "${match}" != "true" ]]; do
-        if [[ "${mode}" == "$1" ]]; then
+        [[ "${mode}" == "$1" ]] && {
             printf "%s" "${count}"
             match="true"
-        fi
+        }
         ((++count))
     done < <(printf "%s\\n" "${modes[@]}")
 }
@@ -28,15 +28,14 @@ function get_new_index
 
 function main
 {
-    ! { source "${BASH_SOURCE[0]//${0##*/}/}../display/notify.sh" \
-        && source "${BASH_SOURCE[0]//${0##*/}/}../display/format.sh"; } \
-            && exit 1
+    ! { source "${BASH_SOURCE[0]//${0##*/}}../display/notify.sh" && \
+        source "${BASH_SOURCE[0]//${0##*/}}../display/format.sh"; } && \
+            exit 1
 
-    modes=( "bsp" "monocle" "float" )
-    current="$(chunkc tiling::query --desktop mode)"
-
-    index="$(search_index "${current}")"
-    index="$(get_new_index "${index}")"
+    modes=("bsp" "monocle" "float")
+    : "$(chunkc tiling::query --desktop mode)"
+    : "$(search_index "${_}")"
+    index="$(get_new_index "${_}")"
 
     title_parts=("chunkwm")
     subtitle_parts=()
