@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+# ====== Variables =============================
+
+gaps_top="4"
+gaps_bottom="24"
+gaps_left="4"
+gaps_right="4"
+gaps_inner="4"
+
+focused_border_color="808080"
+preselect_border_color="2d74da"
+
+# ====== Core settings =========================
+
+chunkc core::log_level error
+chunkc core::plugin_dir /usr/local/opt/chunkwm/share/chunkwm/plugins
+chunkc core::hotload 1
+
+# ====== Tiling settings =======================
+
+chunkc set global_desktop_mode           bsp
+
+chunkc set global_desktop_offset_top     "${gaps_top}"
+chunkc set global_desktop_offset_bottom  "${gaps_bottom}"
+chunkc set global_desktop_offset_left    "${gaps_left}"
+chunkc set global_desktop_offset_right   "${gaps_right}"
+chunkc set global_desktop_offset_gap     "${gaps_inner}"
+
+chunkc set desktop_padding_step_size     10.0
+chunkc set desktop_gap_step_size         5.0
+
+chunkc set bsp_spawn_left                0
+chunkc set bsp_optimal_ratio             1.5
+chunkc set bsp_split_mode                optimal
+chunkc set bsp_split_ratio               0.5
+
+chunkc set monitor_focus_cycle           1
+chunkc set window_focus_cycle            monitor
+
+chunkc set mouse_follows_focus           0
+chunkc set window_float_next             0
+chunkc set window_float_center           1
+chunkc set window_region_locked          1
+
+chunkc set mouse_modifier                \"fn\"
+
+chunkc set preselect_border_color        "0xE0${preselect_border_color}"
+chunkc set preselect_border_width        5
+chunkc set preselect_border_radius       0
+
+# ====== Border settings =======================
+
+chunkc set focused_border_color          "0xE0${focused_border_color}"
+chunkc set focused_border_width          6
+chunkc set focused_border_radius         0
+chunkc set focused_border_skip_floating  1
+chunkc set focused_border_skip_monocle   1
+
+# ====== Load Plugins =========================
+
+chunkc core::load border.so
+chunkc core::load tiling.so
+
+# ====== List of rules =========================
+
+# General applications
+chunkc tiling::rule --owner Finder --name Copy --state float &
+chunkc tiling::rule --owner Finder --name Move --state float &
+chunkc tiling::rule --owner Finder --name Info --state float &
+chunkc tiling::rule --owner Finder --name Connect --state float &
+chunkc tiling::rule --owner \"App Store\" --state float &
+chunkc tiling::rule --owner \"System Preferences\" --state float &
+chunkc tiling::rule --owner \"Activity Monitor\" --state float &
+chunkc tiling::rule --owner \"KeePassX\" --state float &
+chunkc tiling::rule --owner \"Calculator\" --state float &
+chunkc tiling::rule --owner \"Dictionary\" --state float &
+chunkc tiling::rule --owner \"mpv\" --state float &
+chunkc tiling::rule --owner \"The Unarchiver\" --state float &
+chunkc tiling::rule --owner \"Transmission\" --state float &
+chunkc tiling::rule --owner \"VirtualBox\" --name \"Oracle VM VirtualBox Manager\" --state float &

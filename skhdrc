@@ -1,0 +1,93 @@
+# opens iTerm2
+alt - return : "${HOME}"/.config/chunkwm/scripts/open_iterm2.sh
+
+# Show system statistics
+fn + lalt - 1 : "${HOME}"/.config/chunkwm/scripts/show_cpu.sh
+fn + lalt - 2 : "${HOME}"/.config/chunkwm/scripts/show_mem.sh
+fn + lalt - 3 : "${HOME}"/.config/chunkwm/scripts/show_bat.sh
+fn + lalt - 4 : "${HOME}"/.config/chunkwm/scripts/show_disk.sh
+fn + lalt - 5 : "${HOME}"/.config/chunkwm/scripts/show_song.sh
+
+# Navigation
+alt - h : chunkc tiling::window --focus west
+alt - j : chunkc tiling::window --focus south
+alt - k : chunkc tiling::window --focus north
+alt - l : chunkc tiling::window --focus east
+
+# Moving windows
+shift + alt - h : chunkc tiling::window --warp west
+shift + alt - j : chunkc tiling::window --warp south
+shift + alt - k : chunkc tiling::window --warp north
+shift + alt - l : chunkc tiling::window --warp east
+
+# Move focus container to workspace
+shift + alt - m : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop) || \
+                  chunkc tiling::window --send-to-desktop (chunkc get _last_active_desktop)
+shift + alt - p : chunkc tiling::window --send-to-desktop prev
+shift + alt - n : chunkc tiling::window --send-to-desktop next
+shift + alt - 1 : chunkc tiling::window --send-to-desktop 1
+shift + alt - 2 : chunkc tiling::window --send-to-desktop 2
+shift + alt - 3 : chunkc tiling::window --send-to-desktop 3
+shift + alt - 4 : chunkc tiling::window --send-to-desktop 4
+shift + alt - 5 : chunkc tiling::window --send-to-desktop 5
+shift + alt - 6 : chunkc tiling::window --send-to-desktop 6
+
+# Resize windows
+lctrl + alt - h : \
+    chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge west; \
+    chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge east
+
+lctrl + alt - j : \
+    chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge south; \
+    chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge north
+
+lctrl + alt - k : \
+    chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge north; \
+    chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge south
+
+lctrl + alt - l : \
+    chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge east; \
+    chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge west
+
+# Float and center window
+shift + alt - c : \
+    if (("$(chunkc tiling::query --window float)" == 0)); then \
+        chunkc tiling::window --toggle float; \
+        chunkc tiling::window --grid-layout 6:6:1:1:4:4; \
+    else \
+        chunkc tiling::window --toggle float; \
+    fi
+
+# Equalize size of windows
+lctrl + alt - 0 : chunkc tiling::desktop --equalize
+
+# Enable / Disable gaps in current workspace
+lctrl + alt - g : chunkc tiling::desktop --toggle offset
+
+# Rotate windows clockwise and anticlockwise
+alt - r         : chunkc tiling::desktop --rotate 90
+shift + alt - r : chunkc tiling::desktop --rotate 270
+
+# Rotate on X and Y Axis
+shift + alt - x : chunkc tiling::desktop --mirror horizontal
+shift + alt - y : chunkc tiling::desktop --mirror vertical
+
+# Set insertion point for focused container
+shift + lctrl + alt - x : chunkc tiling::window --use-insertion-point cancel
+shift + lctrl + alt - h : chunkc tiling::window --use-insertion-point west
+shift + lctrl + alt - j : chunkc tiling::window --use-insertion-point south
+shift + lctrl + alt - k : chunkc tiling::window --use-insertion-point north
+shift + lctrl + alt - l : chunkc tiling::window --use-insertion-point east
+
+# Float / Unfloat window
+shift + alt - space : chunkc tiling::window --toggle float
+
+# Restart Chunkwm
+shift + lctrl + alt - r : \
+    /usr/bin/env osascript <<< \
+        "display notification \"Restarting Chunkwm\" with title \"Chunkwm\""; \
+    brew services restart chunkwm
+
+# Make window native fullscreen
+alt - f         : chunkc tiling::window --toggle fullscreen
+shift + alt - f : chunkc tiling::window --toggle native-fullscreen
