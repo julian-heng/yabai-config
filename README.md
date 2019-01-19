@@ -91,7 +91,7 @@ Note: May have to change the location of the scripts in skhdrc
 ##### Screenshots
 <img width="378" height="97" src="screenshots/cpu.png?raw=true"><img width="378" height="97" src="screenshots/mem.png?raw=true">
 <img width="378" height="97" src="screenshots/bat.png?raw=true"><img width="378" height="97" src="screenshots/disk.png?raw=true">
-<img width="378" height="97" src="screenshots/song_notify.png?raw=true">
+<img width="378" height="97" src="screenshots/song.png?raw=true">
 
 ```
 fn + lctrl - 1 : /path/to/script
