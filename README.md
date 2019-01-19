@@ -86,17 +86,17 @@ Click [here](scripts) to view the script folder
 Note: May have to change the location of the scripts in skhdrc
 
 ##### Key Combination
-<kbd>fn</kbd> + <kbd>lctrl</kbd> + <kbd>num</kbd>
+<kbd>fn</kbd> + <kbd>lalt</kbd> + <kbd>num</kbd>
 
 ##### Screenshots
-<img width="378" height="97" src="screenshots/cpu.png?raw=true"><img width="378" height="97" src="screenshots/mem.png?raw=true">
-<img width="378" height="97" src="screenshots/bat.png?raw=true"><img width="378" height="97" src="screenshots/disk.png?raw=true">
-<img width="378" height="97" src="screenshots/song.png?raw=true">
+<img width="382" height="101" src="screenshots/cpu.png?raw=true"><img width="382" height="101" src="screenshots/mem.png?raw=true">
+<img width="382" height="101" src="screenshots/bat.png?raw=true"><img width="382" height="101" src="screenshots/disk.png?raw=true">
+<img width="382" height="101" src="screenshots/song.png?raw=true">
 
 ```
-fn + lctrl - 1 : /path/to/script
-fn + lctrl - 2 : /path/to/script
-fn + lctrl - 3 : /path/to/script
+fn + lalt - 1 : /path/to/script
+fn + lalt - 2 : /path/to/script
+fn + lalt - 3 : /path/to/script
 ...
 ```
 
