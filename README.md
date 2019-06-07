@@ -62,11 +62,11 @@ $ ln -s "${HOME}/.config/chunkwm/skhdrc" "${HOME}/.skhdrc"
 
 | Action        | Key Combination                                  |
 |---------------|--------------------------------------------------|
-| Insert left   | <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>h</kbd> |
-| Insert down   | <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>j</kbd> |
-| Insert up     | <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>k</kbd> |
-| Insert right  | <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>l</kbd> |
-| Cancel insert | <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>x</kbd> |
+| Insert left   | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>h</kbd> |
+| Insert down   | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>j</kbd> |
+| Insert up     | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>k</kbd> |
+| Insert right  | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>l</kbd> |
+| Cancel insert | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>x</kbd> |
 
 #### Misc
 
