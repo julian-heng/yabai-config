@@ -1,0 +1,88 @@
+# opens iTerm2
+alt - return : "${HOME}"/.config/yabai/scripts/open_iterm2.sh
+
+# Show system statistics
+fn + lalt - 1 : "${HOME}"/.config/yabai/scripts/show_cpu.sh
+fn + lalt - 2 : "${HOME}"/.config/yabai/scripts/show_mem.sh
+fn + lalt - 3 : "${HOME}"/.config/yabai/scripts/show_bat.sh
+fn + lalt - 4 : "${HOME}"/.config/yabai/scripts/show_disk.sh
+fn + lalt - 5 : "${HOME}"/.config/yabai/scripts/show_song.sh
+
+# Navigation ## NEED WORK ##
+alt - h : yabai -m window --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
+
+# Moving windows
+shift + alt - h : yabai -m window --warp west
+shift + alt - j : yabai -m window --warp south
+shift + alt - k : yabai -m window --warp north
+shift + alt - l : yabai -m window --warp east
+
+# Move focus container to workspace
+shift + alt - m : yabai -m window --display last; yabai -m display --focus last
+shift + alt - p : yabai -m window --display prev; yabai -m display --focus prev
+shift + alt - n : yabai -m window --display next; yabai -m display --focus next
+shift + alt - 1 : yabai -m window --display 1; yabai -m display --focus 1
+shift + alt - 2 : yabai -m window --display 2; yabai -m display --focus 2
+shift + alt - 3 : yabai -m window --display 3; yabai -m display --focus 3
+shift + alt - 4 : yabai -m window --display 4; yabai -m display --focus 4
+shift + alt - 5 : yabai -m window --display 5; yabai -m display --focus 5
+shift + alt - 6 : yabai -m window --display 6; yabai -m display --focus 6
+
+# Resize windows ## LATER ##
+#lctrl + alt - h : \
+    #yabai -m window --resize left:-20:0; \
+    #yabai -m window --resize --use-temporary-ratio 0.05 --adjust-window-edge west; \
+    #yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge east
+
+#lctrl + alt - j : \
+    #yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge south; \
+    #yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge north
+
+#lctrl + alt - k : \
+    #yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge north; \
+    #yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge south
+
+#lctrl + alt - l : \
+    #yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge east; \
+    #yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge west
+
+# Float and center window
+shift + alt - c : yabai -m window --toggle float;\
+                  yabai -m window --grid 4:4:1:1:2:2
+
+# Equalize size of windows
+lctrl + alt - 0 : yabai -m space --balance
+
+# Enable / Disable gaps in current workspace
+lctrl + alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
+
+# Rotate windows clockwise and anticlockwise
+alt - r         : yabai -m space --rotate 90
+shift + alt - r : yabai -m space --rotate 270
+
+# Rotate on X and Y Axis
+shift + alt - x : yabai -m space --mirror x-axis
+shift + alt - y : yabai -m space --mirror y-axis
+
+# Set insertion point for focused container
+shift + lctrl + alt - x : yabai -m window --insert cancel
+shift + lctrl + alt - h : yabai -m window --insert west
+shift + lctrl + alt - j : yabai -m window --insert south
+shift + lctrl + alt - k : yabai -m window --insert north
+shift + lctrl + alt - l : yabai -m window --insert east
+
+# Float / Unfloat window
+shift + alt - space : yabai -m window --toggle float
+
+# Restart Yabai
+shift + lctrl + alt - r : 
+    /usr/bin/env osascript <<< \
+        "display notification \"Restarting Yabai\" with title \"Yabai\""; \
+    launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+
+# Make window native fullscreen
+alt - f         : yabai -m window --toggle zoom-fullscreen
+shift + alt - f : yabai -m window --toggle native-fullscreen
