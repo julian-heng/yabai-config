@@ -1,4 +1,4 @@
-# chunkwm and skhd configs
+# chunkwm, yabai and skhd configs
 My personal chunkwm and skhd configs and scripts
 
 See my [dotfiles](https://gitlab.com/julian-heng/dotfiles.git) repo for my other configs
@@ -26,7 +26,7 @@ $ ln -s "${HOME}/.config/yabai/skhdrc" "${HOME}/.skhdrc"
 ```
 
 ## Keyboard shortcuts
-### Chunkwm
+### Chunkwm / Yabai
 #### Changing focus
 <kbd>alt</kbd> + <kbd>hjkl</kbd>
 

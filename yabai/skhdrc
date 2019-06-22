@@ -31,23 +31,22 @@ shift + alt - 4 : yabai -m window --display 4; yabai -m display --focus 4
 shift + alt - 5 : yabai -m window --display 5; yabai -m display --focus 5
 shift + alt - 6 : yabai -m window --display 6; yabai -m display --focus 6
 
-# Resize windows ## LATER ##
-#lctrl + alt - h : \
-    #yabai -m window --resize left:-20:0; \
-    #yabai -m window --resize --use-temporary-ratio 0.05 --adjust-window-edge west; \
-    #yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge east
+# Resize windows
+lctrl + alt - h : \
+    yabai -m window --resize left:-20:0 ; \
+    yabai -m window --resize right:-20:0
 
-#lctrl + alt - j : \
-    #yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge south; \
-    #yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge north
+lctrl + alt - j : \
+    yabai -m window --resize bottom:0:20 ; \
+    yabai -m window --resize top:0:20
 
-#lctrl + alt - k : \
-    #yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge north; \
-    #yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge south
+lctrl + alt - k : \
+    yabai -m window --resize top:0:-20 ; \
+    yabai -m window --resize bottom:0:-20
 
-#lctrl + alt - l : \
-    #yabai -m window --use-temporary-ratio 0.05 --adjust-window-edge east; \
-    #yabai -m window --use-temporary-ratio -0.05 --adjust-window-edge west
+lctrl + alt - l : \
+    yabai -m window --resize right:20:0 ; \
+    yabai -m window --resize left:20:0
 
 # Float and center window
 shift + alt - c : yabai -m window --toggle float;\
