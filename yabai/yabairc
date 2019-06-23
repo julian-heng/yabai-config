@@ -53,17 +53,18 @@ yabai -m config active_window_border_color "0xE0${focused_border_color}"
 # ====== List of rules =========================
 
 # General applications
-yabai -m rule --add app=Finder --name Copy manage=off
-yabai -m rule --add app=Finder --name Move manage=off
-yabai -m rule --add app=Finder --name Info manage=off
-yabai -m rule --add app=Finder --name Connect manage=off
-yabai -m rule --add app=\"App Store\" manage=off
-yabai -m rule --add app=\"System Preferences\" manage=off
-yabai -m rule --add app=\"Activity Monitor\" manage=off
-yabai -m rule --add app=\"KeePassX\" manage=off
-yabai -m rule --add app=\"Calculator\" manage=off
-yabai -m rule --add app=\"Dictionary\" manage=off
-yabai -m rule --add app=\"mpv\" manage=off
-yabai -m rule --add app=\"The Unarchiver\" manage=off
-yabai -m rule --add app=\"Transmission\" manage=off
-yabai -m rule --add app=\"VirtualBox\" --name \"Oracle VM VirtualBox Manager\" manage=off
+#yabai -m rule --add app=Finder --name Copy manage=off
+#yabai -m rule --add app=Finder --name Move manage=off
+#yabai -m rule --add app=Finder --name Info manage=off
+#yabai -m rule --add app=Finder --name Connect manage=off
+yabai -m rule --add app=Finder manage=off
+yabai -m rule --add app="App Store" manage=off
+yabai -m rule --add app="System Preferences" manage=off
+yabai -m rule --add app="Activity Monitor" manage=off
+yabai -m rule --add app="KeePassX" manage=off
+yabai -m rule --add app="Calculator" manage=off
+yabai -m rule --add app="Dictionary" manage=off
+yabai -m rule --add app="mpv" manage=off
+yabai -m rule --add app="The Unarchiver" manage=off
+yabai -m rule --add app="Transmission" manage=off
+yabai -m rule --add app="VirtualBox" manage=off
