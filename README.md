@@ -1,12 +1,14 @@
 # chunkwm, yabai and skhd configs
-My personal chunkwm and skhd configs and scripts
+My personal chunkwm, yabai and skhd configs
 
 See my [dotfiles](https://gitlab.com/julian-heng/dotfiles.git) repo for my other configs
+
+NOTE: yabai requires System Integrity Protection to be disabled to work properly. See [here](https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection) for more information.
 
 ## Installing for chunkwm
 ```sh
 # Remove previous links
-$ rm -f "${HOME}"/.{chunkwmrc,skhdrc}
+$ rm -f "${HOME}"/.{chunkwm,skhd}rc
 
 # Install configs
 $ git clone https://github.com/Julian-Heng/chunkwm-config.git "${HOME}"/.config/chunkwm
@@ -17,7 +19,7 @@ $ ln -s "${HOME}/.config/chunkwm/chunkwm/skhdrc" "${HOME}/.skhdrc"
 ## Installing for yabai
 ```sh
 # Remove previous links
-$ rm -f "${HOME}"/.{yabairc,skhdrc}
+$ rm -f "${HOME}"/.{yabai,skhd}rc
 
 # Install configs
 $ git clone https://github.com/Julian-Heng/chunkwm-config.git "${HOME}"/.config/yabai
@@ -71,13 +73,13 @@ $ ln -s "${HOME}/.config/yabai/yabai/skhdrc" "${HOME}/.skhdrc"
 
 #### Insertion point
 
-| Action        | Key Combination                                  |
-|---------------|--------------------------------------------------|
-| Insert left   | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>h</kbd> |
-| Insert down   | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>j</kbd> |
-| Insert up     | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>k</kbd> |
-| Insert right  | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>l</kbd> |
-| Cancel insert | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>x</kbd> |
+| Action                       | Key Combination                                                     |
+|------------------------------|---------------------------------------------------------------------|
+| Insert left                  | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>h</kbd> |
+| Insert down                  | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>j</kbd> |
+| Insert up                    | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>k</kbd> |
+| Insert right                 | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>l</kbd> |
+| Cancel insert (chunkwm only) | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>x</kbd> |
 
 #### Misc
 
