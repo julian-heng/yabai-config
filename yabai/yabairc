@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+# ====== Variables =============================
+
+gaps_top="4"
+gaps_bottom="24"
+gaps_left="4"
+gaps_right="4"
+gaps_inner="4"
+
+focused_border_color="808080"
+preselect_border_color="2d74da"
+
+# ====== Tiling settings =======================
+
+yabai -m config layout                   bsp
+
+yabai -m config top_padding              "${gaps_top}"
+yabai -m config bottom_padding           "${gaps_bottom}"
+yabai -m config left_padding             "${gaps_left}"
+yabai -m config right_padding            "${gaps_right}"
+yabai -m config window_gap               "${gaps_inner}"
+
+#chunkc set desktop_padding_step_size     10.0
+#chunkc set desktop_gap_step_size         5.0
+
+#chunkc set bsp_spawn_left                0
+#chunkc set bsp_optimal_ratio             1.5
+#chunkc set bsp_split_mode                optimal
+yabai -m config split_ratio              0.5
+
+#chunkc set monitor_focus_cycle           1
+#chunkc set window_focus_cycle            monitor
+
+yabai -m config mouse_follows_focus      off
+#chunkc set window_float_next             0
+#chunkc set window_float_center           1
+#chunkc set window_region_locked          1
+
+yabai -m config mouse_modifier           fn
+
+yabai -m config normal_window_border_color "0xE0${preselect_border_color}"
+yabai -m config window_border_width      5
+#chunkc set preselect_border_radius       0
+
+# ====== Border settings =======================
+
+yabai -m config active_window_border_color "0xE0${focused_border_color}"
+#chunkc set focused_border_radius         0
+#chunkc set focused_border_skip_floating  1
+#chunkc set focused_border_skip_monocle   1
+
+# ====== List of rules =========================
+
+# General applications
+#yabai -m rule --add app=Finder --name Copy manage=off
+#yabai -m rule --add app=Finder --name Move manage=off
+#yabai -m rule --add app=Finder --name Info manage=off
+#yabai -m rule --add app=Finder --name Connect manage=off
+yabai -m rule --add app=Finder manage=off
+yabai -m rule --add app="App Store" manage=off
+yabai -m rule --add app="System Preferences" manage=off
+yabai -m rule --add app="Activity Monitor" manage=off
+yabai -m rule --add app="KeePassX" manage=off
+yabai -m rule --add app="Calculator" manage=off
+yabai -m rule --add app="Dictionary" manage=off
+yabai -m rule --add app="mpv" manage=off
+yabai -m rule --add app="The Unarchiver" manage=off
+yabai -m rule --add app="Transmission" manage=off
+yabai -m rule --add app="VirtualBox" manage=off

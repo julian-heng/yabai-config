@@ -1,21 +1,32 @@
-# chunkwm and skhd configs
+# chunkwm, yabai and skhd configs
 My personal chunkwm and skhd configs and scripts
 
 See my [dotfiles](https://gitlab.com/julian-heng/dotfiles.git) repo for my other configs
 
-## Installing
+## Installing for chunkwm
 ```sh
 # Remove previous links
 $ rm -f "${HOME}"/.{chunkwmrc,skhdrc}
 
 # Install configs
 $ git clone https://github.com/Julian-Heng/chunkwm-config.git "${HOME}"/.config/chunkwm
-$ ln -s "${HOME}/.config/chunkwm/chunkwmrc" "${HOME}/.chunkwmrc"
-$ ln -s "${HOME}/.config/chunkwm/skhdrc" "${HOME}/.skhdrc"
+$ ln -s "${HOME}/.config/chunkwm/chunkwm/chunkwmrc" "${HOME}/.chunkwmrc"
+$ ln -s "${HOME}/.config/chunkwm/chunkwm/skhdrc" "${HOME}/.skhdrc"
+```
+
+## Installing for yabai
+```sh
+# Remove previous links
+$ rm -f "${HOME}"/.{yabairc,skhdrc}
+
+# Install configs
+$ git clone https://github.com/Julian-Heng/chunkwm-config.git "${HOME}"/.config/yabai
+$ ln -s "${HOME}/.config/yabai/yabai/yabairc" "${HOME}/.yabairc"
+$ ln -s "${HOME}/.config/yabai/yabai/skhdrc" "${HOME}/.skhdrc"
 ```
 
 ## Keyboard shortcuts
-### Chunkwm
+### Chunkwm / Yabai
 #### Changing focus
 <kbd>alt</kbd> + <kbd>hjkl</kbd>
 
