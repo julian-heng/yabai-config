@@ -8,63 +8,55 @@ gaps_left="4"
 gaps_right="4"
 gaps_inner="4"
 
+normal_border_color="010101"
 focused_border_color="808080"
 preselect_border_color="2d74da"
 
 # ====== Tiling settings =======================
 
-yabai -m config layout                   bsp
+yabai -m config layout                      bsp
 
-yabai -m config top_padding              "${gaps_top}"
-yabai -m config bottom_padding           "${gaps_bottom}"
-yabai -m config left_padding             "${gaps_left}"
-yabai -m config right_padding            "${gaps_right}"
-yabai -m config window_gap               "${gaps_inner}"
+yabai -m config top_padding                 "${gaps_top}"
+yabai -m config bottom_padding              "${gaps_bottom}"
+yabai -m config left_padding                "${gaps_left}"
+yabai -m config right_padding               "${gaps_right}"
+yabai -m config window_gap                  "${gaps_inner}"
 
-#chunkc set desktop_padding_step_size     10.0
-#chunkc set desktop_gap_step_size         5.0
+yabai -m config mouse_follows_focus         off
+yabai -m config focus_follows_mouse         off
 
-#chunkc set bsp_spawn_left                0
-#chunkc set bsp_optimal_ratio             1.5
-#chunkc set bsp_split_mode                optimal
-yabai -m config split_ratio              0.5
+yabai -m config mouse_modifier              fn
+yabai -m config mouse_action1               move
+yabai -m config mouse_action2               resize
 
-#chunkc set monitor_focus_cycle           1
-#chunkc set window_focus_cycle            monitor
+yabai -m config window_topmost              off
+yabai -m config window_opacity              off
+yabai -m config window_shadow               float
 
-yabai -m config mouse_follows_focus      off
-#chunkc set window_float_next             0
-#chunkc set window_float_center           1
-#chunkc set window_region_locked          1
-
-yabai -m config mouse_modifier           fn
-
-yabai -m config normal_window_border_color "0xE0${preselect_border_color}"
-yabai -m config window_border_width      5
-#chunkc set preselect_border_radius       0
+yabai -m config active_window_opacity       1.0
+yabai -m config normal_window_opacity       0.9
+yabai -m config split_ratio                 0.5
+yabai -m config auto_balance                off
 
 # ====== Border settings =======================
 
-yabai -m config active_window_border_color "0xE0${focused_border_color}"
-#chunkc set focused_border_radius         0
-#chunkc set focused_border_skip_floating  1
-#chunkc set focused_border_skip_monocle   1
+yabai -m config window_border               on
+yabai -m config window_border_width         2
+yabai -m config active_window_border_color  "0xE0${focused_border_color}"
+yabai -m config insert_window_border_color  "0xE0${preselect_border_color}"
+yabai -m config normal_window_border_color  "0x00${normal_border_color}"
 
 # ====== List of rules =========================
 
-# General applications
-#yabai -m rule --add app=Finder --name Copy manage=off
-#yabai -m rule --add app=Finder --name Move manage=off
-#yabai -m rule --add app=Finder --name Info manage=off
-#yabai -m rule --add app=Finder --name Connect manage=off
-yabai -m rule --add app=Finder manage=off
-yabai -m rule --add app="App Store" manage=off
-yabai -m rule --add app="System Preferences" manage=off
-yabai -m rule --add app="Activity Monitor" manage=off
-yabai -m rule --add app="KeePassX" manage=off
-yabai -m rule --add app="Calculator" manage=off
-yabai -m rule --add app="Dictionary" manage=off
-yabai -m rule --add app="mpv" manage=off
-yabai -m rule --add app="The Unarchiver" manage=off
-yabai -m rule --add app="Transmission" manage=off
-yabai -m rule --add app="VirtualBox" manage=off
+yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
+yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
+yabai -m rule --add label="System Preferences" app="^System Preferences$" manage=off
+yabai -m rule --add label="App Store" app="^App Store$" manage=off
+yabai -m rule --add label="Activity Monitor" app="^Activity Monitor$" manage=off
+yabai -m rule --add label="KeePassXC" app="^KeePassXC$" manage=off
+yabai -m rule --add label="Calculator" app="^Calculator$" manage=off
+yabai -m rule --add label="Dictionary" app="^Dictionary$" manage=off
+yabai -m rule --add label="mpv" app="^mpv$" manage=off
+yabai -m rule --add label="The Unarchiver" app="^The Unarchiver$" manage=off
+yabai -m rule --add label="Transmission" app="^Transmission$" manage=off
+yabai -m rule --add label="VirtualBox" app="^VirtualBox$" manage=off
