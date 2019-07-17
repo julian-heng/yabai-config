@@ -8,7 +8,7 @@ fn + lalt - 3 : "${HOME}"/.config/yabai/scripts/show_bat.sh
 fn + lalt - 4 : "${HOME}"/.config/yabai/scripts/show_disk.sh
 fn + lalt - 5 : "${HOME}"/.config/yabai/scripts/show_song.sh
 
-# Navigation ## NEED WORK ##
+# Navigation
 alt - h : yabai -m window --focus west
 alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
@@ -21,15 +21,15 @@ shift + alt - k : yabai -m window --warp north
 shift + alt - l : yabai -m window --warp east
 
 # Move focus container to workspace
-shift + alt - m : yabai -m window --display last; yabai -m display --focus last
-shift + alt - p : yabai -m window --display prev; yabai -m display --focus prev
-shift + alt - n : yabai -m window --display next; yabai -m display --focus next
-shift + alt - 1 : yabai -m window --display 1; yabai -m display --focus 1
-shift + alt - 2 : yabai -m window --display 2; yabai -m display --focus 2
-shift + alt - 3 : yabai -m window --display 3; yabai -m display --focus 3
-shift + alt - 4 : yabai -m window --display 4; yabai -m display --focus 4
-shift + alt - 5 : yabai -m window --display 5; yabai -m display --focus 5
-shift + alt - 6 : yabai -m window --display 6; yabai -m display --focus 6
+shift + alt - m : yabai -m window --space last && yabai -m space --focus last
+shift + alt - p : yabai -m window --space prev && yabai -m space --focus prev
+shift + alt - n : yabai -m window --space next && yabai -m space --focus next
+shift + alt - 1 : yabai -m window --space 1 && yabai -m space --focus 1
+shift + alt - 2 : yabai -m window --space 2 && yabai -m space --focus 2
+shift + alt - 3 : yabai -m window --space 3 && yabai -m space --focus 3
+shift + alt - 4 : yabai -m window --space 4 && yabai -m space --focus 4
+shift + alt - 5 : yabai -m window --space 5 && yabai -m space --focus 5
+shift + alt - 6 : yabai -m window --space 6 && yabai -m space --focus 6
 
 # Resize windows
 lctrl + alt - h : \
@@ -67,7 +67,6 @@ shift + alt - x : yabai -m space --mirror x-axis
 shift + alt - y : yabai -m space --mirror y-axis
 
 # Set insertion point for focused container
-shift + lctrl + alt - x : yabai -m window --insert cancel
 shift + lctrl + alt - h : yabai -m window --insert west
 shift + lctrl + alt - j : yabai -m window --insert south
 shift + lctrl + alt - k : yabai -m window --insert north
