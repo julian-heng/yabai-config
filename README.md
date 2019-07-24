@@ -11,7 +11,7 @@ NOTE: yabai requires System Integrity Protection to be disabled to work properly
 $ rm -f "${HOME}"/.{chunkwm,skhd}rc
 
 # Install configs
-$ git clone https://github.com/Julian-Heng/chunkwm-config.git "${HOME}"/.config/chunkwm
+$ git clone https://github.com/Julian-Heng/chunkwm-yabai-config.git "${HOME}"/.config/chunkwm
 $ ln -s "${HOME}/.config/chunkwm/chunkwm/chunkwmrc" "${HOME}/.chunkwmrc"
 $ ln -s "${HOME}/.config/chunkwm/chunkwm/skhdrc" "${HOME}/.skhdrc"
 ```
@@ -22,7 +22,7 @@ $ ln -s "${HOME}/.config/chunkwm/chunkwm/skhdrc" "${HOME}/.skhdrc"
 $ rm -f "${HOME}"/.{yabai,skhd}rc
 
 # Install configs
-$ git clone https://github.com/Julian-Heng/chunkwm-config.git "${HOME}"/.config/yabai
+$ git clone https://github.com/Julian-Heng/chunkwm-yabai-config.git "${HOME}"/.config/yabai
 $ ln -s "${HOME}/.config/yabai/yabai/yabairc" "${HOME}/.yabairc"
 $ ln -s "${HOME}/.config/yabai/yabai/skhdrc" "${HOME}/.skhdrc"
 ```
