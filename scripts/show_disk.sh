@@ -123,12 +123,12 @@ get_disk_info()
         /Volume Name/ { b = strloop(3) }
         /File System Personality:/ { c = strloop(4) }
         /Mount Point/ { d = strloop(3) }
-        /Volume Total Space/ { e = $9 / (2 * (1024 ^ 2)) }
-        /Volume Used Space/ { f = $9 / (2 * (1024 ^ 2)) }
+        /Container Total Space/ { e = $9 / (2 * (1024 ^ 2)) }
+        /Container Free Space/ { f = $9 / (2 * (1024 ^ 2)) }
         END {
             printf "%s %s %s %s %f %f %f", \
                 a, b, c, d, \
-                e, f, ((f / e) * 100)
+                e, e - f, (((e - f) / e) * 100)
         }'
 
     read -r disk_device \
