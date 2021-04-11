@@ -5,6 +5,7 @@ This repository contains my standalone Yabai and Skhd configurations.
 See my [dotfiles](https://gitlab.com/julian-heng/dotfiles.git) repository for my other configurations.
 
 NOTE: Yabai requires System Integrity Protection to be disabled to work properly. See [here](https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection) for more information.
+NOTE: For macOS Big Sur and above, scripting additions needs elevated privileges to work properly. See [here](https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur---automatically-load-scripting-addition-on-startup) for more information.
 
 
 ## Installation
@@ -136,4 +137,3 @@ Click [here](scripts/open_iterm2.sh) to view the script.
 
 ```
 alt - return : /path/to/launch/terminal
-```
