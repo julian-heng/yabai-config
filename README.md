@@ -1,38 +1,33 @@
-# chunkwm, yabai and skhd configs
-My personal chunkwm, yabai and skhd configs
+# Yabai and Skhd Config
 
-See my [dotfiles](https://gitlab.com/julian-heng/dotfiles.git) repo for my other configs
+This repository contains my standalone Yabai and Skhd configurations.
 
-NOTE: yabai requires System Integrity Protection to be disabled to work properly. See [here](https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection) for more information.
+See my [dotfiles](https://gitlab.com/julian-heng/dotfiles.git) repository for my other configurations.
 
-## Installing for chunkwm
-```sh
-# Remove previous links
-$ rm -f "${HOME}"/.{chunkwm,skhd}rc
+NOTE: Yabai requires System Integrity Protection to be disabled to work properly. See [here](https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection) for more information.
 
-# Install configs
-$ git clone https://github.com/Julian-Heng/chunkwm-yabai-config.git "${HOME}"/.config/chunkwm
-$ ln -s "${HOME}/.config/chunkwm/chunkwm/chunkwmrc" "${HOME}/.chunkwmrc"
-$ ln -s "${HOME}/.config/chunkwm/chunkwm/skhdrc" "${HOME}/.skhdrc"
-```
 
-## Installing for yabai
+## Installation
+
 ```sh
 # Remove previous links
 $ rm -f "${HOME}"/.{yabai,skhd}rc
 
 # Install configs
-$ git clone https://github.com/Julian-Heng/chunkwm-yabai-config.git "${HOME}"/.config/yabai
-$ ln -s "${HOME}/.config/yabai/yabai/yabairc" "${HOME}/.yabairc"
-$ ln -s "${HOME}/.config/yabai/yabai/skhdrc" "${HOME}/.skhdrc"
+$ git clone https://github.com/Julian-Heng/yabai-config.git "${HOME}"/.config/yabai
+$ ln -s "${HOME}/.config/yabai/yabairc" "${HOME}/.yabairc"
+$ ln -s "${HOME}/.config/yabai/skhdrc" "${HOME}/.skhdrc"
 ```
 
-## Keyboard shortcuts
-### Chunkwm / Yabai
-#### Changing focus
+
+## Keyboard Shortcuts
+
+### Changing Focus
+
 <kbd>alt</kbd> + <kbd>hjkl</kbd>
 
-#### Resize windows
+
+### Resize Windows
 
 | Action       | Key Combination                                  |
 |--------------|--------------------------------------------------|
@@ -40,12 +35,15 @@ $ ln -s "${HOME}/.config/yabai/yabai/skhdrc" "${HOME}/.skhdrc"
 | Resize down  | <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>j</kbd> |
 | Resize up    | <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>k</kbd> |
 | Resize right | <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>l</kbd> |
-| Equalise     | <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>0</kbd> |
+| Equalise     | <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>e</kbd> |
 
-#### Move windows
+
+### Move Windows
+
 <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>hjkl</kbd>
 
-#### Move windows to workspace
+
+### Move Windows to Workspace
 
 | Action                      | Key Combination                                    |
 |-----------------------------|----------------------------------------------------|
@@ -54,54 +52,63 @@ $ ln -s "${HOME}/.config/yabai/yabai/skhdrc" "${HOME}/.skhdrc"
 | Send to next workplace      | <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>n</kbd>   |
 | Send to workplace           | <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>num</kbd> |
 
-#### Rotate windows
+
+### Rotate Windows
 
 | Action               | Key Combination                                  |
 |----------------------|--------------------------------------------------|
-| Rotate clockwise     | <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>r</kbd> |
-| Rotate anticlockwise | <kbd>alt</kbd> + <kbd>r</kbd>                    |
+| Rotate clockwise     | <kbd>alt</kbd> + <kbd>r</kbd>                    |
+| Rotate anticlockwise | <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>r</kbd> |
 | Flip on x-axis       | <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>x</kbd> |
 | Flip on y-axis       | <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>y</kbd> |
 
-#### Window actions
 
+### Window Actions
 | Action            | Key Combination                                  |
 |-------------------|--------------------------------------------------|
 | Fullscreen        | <kbd>alt</kbd>  + <kbd>f</kbd>                   |
 | Native fullscreen | <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>f</kbd> |
-| Center window     | <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>c</kbd> |
 
-#### Insertion point
 
-| Action                       | Key Combination                                                     |
-|------------------------------|---------------------------------------------------------------------|
-| Insert left                  | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>h</kbd> |
-| Insert down                  | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>j</kbd> |
-| Insert up                    | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>k</kbd> |
-| Insert right                 | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>l</kbd> |
-| Cancel insert (chunkwm only) | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>x</kbd> |
+### Window Insertion Point
 
-#### Misc
+| Action       | Key Combination                                                     |
+|--------------|---------------------------------------------------------------------|
+| Insert left  | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>h</kbd> |
+| Insert down  | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>j</kbd> |
+| Insert up    | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>k</kbd> |
+| Insert right | <kbd>shift</kbd> + <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>l</kbd> |
 
-| Action          | Key Combination                                                     |
-|-----------------|---------------------------------------------------------------------|
-| Toggle float    | <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>space</kbd>                |
-| Toggle gaps     | <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>g</kbd>                    |
-| Restart chunkwm | <kbd>lctrl</kbd> + <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>r</kbd> |
+NOTE: To cancel insertion point, press the last inerstion key combination.
 
-### Non-chunkwm
-#### Show information
-##### Description
-Uses `osascript` to show information like CPU, memory, battery, etc. The CPU script requires [osx-cpu-temp](https://github.com/lavoiesl/osx-cpu-temp) installed. The song script supports iTunes and cmus.
 
-Click [here](scripts) to view the script folder
+### Misc
 
-Note: May have to change the location of the scripts in skhdrc
+| Action        | Key Combination                                                     |
+|---------------|---------------------------------------------------------------------|
+| Toggle float  | <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>space</kbd>                |
+| Toggle gaps   | <kbd>lctrl</kbd> + <kbd>alt</kbd> + <kbd>g</kbd>                    |
+| Restart yabai | <kbd>lctrl</kbd> + <kbd>shift</kbd> + <kbd>alt</kbd> + <kbd>r</kbd> |
 
-##### Key Combination
+
+### Showing System Information
+
+#### Description
+
+Uses `osascript` to show information like CPU, memory, battery, etc. The CPU script requires [osx-cpu-temp](https://github.com/lavoiesl/osx-cpu-temp) installed. The song script supports Music and cmus.
+
+Click [here](scripts) to view the script folder.
+
+NOTE: May have to change the location of the scripts in skhdrc.
+
+
+#### Key Combination
+
 <kbd>fn</kbd> + <kbd>lalt</kbd> + <kbd>num</kbd>
 
-##### Screenshots
+
+#### Screenshots
+
 <img width="382" height="101" src="screenshots/cpu.png?raw=true"><img width="382" height="101" src="screenshots/mem.png?raw=true">
 <img width="382" height="101" src="screenshots/bat.png?raw=true"><img width="382" height="101" src="screenshots/disk.png?raw=true">
 <img width="382" height="101" src="screenshots/song.png?raw=true">
@@ -113,14 +120,18 @@ fn + lalt - 3 : /path/to/script
 ...
 ```
 
-#### Opening applications
-#### Launch iTerm2
-##### Description
-Launches iTerm2 using like in i3-wm.
 
-Click [here](scripts/open_iterm2.sh) to view the script
+### Launch iTerm2
 
-##### Key Combination
+#### Description
+
+Launches iTerm2.
+
+Click [here](scripts/open_iterm2.sh) to view the script.
+
+
+#### Key Combination
+
 <kbd>alt</kbd> + <kbd>return</kbd>
 
 ```
