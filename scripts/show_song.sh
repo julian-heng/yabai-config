@@ -57,9 +57,9 @@ check_app_state()
         app="cmus"
         app_state="$(awk '/status/ {print $2}' < <(cmus-remote -Q))"
         match="true"
-    elif [[ "$(osascript -e "application \"iTunes\" is running")" == "true" ]]; then
-        app="iTunes"
-        app_state="$(osascript -e "tell application \"iTunes\" to player state as string")"
+    elif [[ "$(osascript -e "application \"Music\" is running")" == "true" ]]; then
+        app="Music"
+        app_state="$(osascript -e "tell application \"Music\" to player state as string")"
         match="true"
     fi
 
