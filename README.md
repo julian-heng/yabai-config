@@ -109,9 +109,9 @@ NOTE: May have to change the location of the scripts in skhdrc.
 
 #### Screenshots
 
-<img width="382" height="101" src="screenshots/cpu.png?raw=true"><img width="382" height="101" src="screenshots/mem.png?raw=true">
-<img width="382" height="101" src="screenshots/bat.png?raw=true"><img width="382" height="101" src="screenshots/disk.png?raw=true">
-<img width="382" height="101" src="screenshots/song.png?raw=true">
+<img width="370" height="120" src="screenshots/cpu.png?raw=true"><img width="370" height="120" src="screenshots/mem.png?raw=true">
+<img width="370" height="120" src="screenshots/bat.png?raw=true"><img width="370" height="120" src="screenshots/disk.png?raw=true">
+<img width="370" height="120" src="screenshots/song.png?raw=true">
 
 ```
 fn + lalt - 1 : /path/to/script
