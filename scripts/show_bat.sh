@@ -135,7 +135,7 @@ main()
         title_parts+=("(${bat_percent})")
 
     [[ "${bat_time}" ]] && \
-        subtitle_parts+=("|" "${bat_time} remaining")
+        subtitle_parts+=("|" "${bat_time}")
 
     [[ "${bat_condition}" ]] && \
         subtitle_parts+=("|" "${bat_condition}")
@@ -144,7 +144,7 @@ main()
         subtitle_parts+=("|" "${bat_cycles} cycles")
 
     [[ "${bat_state}" ]] && \
-        message_parts+=("Souce: ${bat_state}")
+        message_parts+=("Source: ${bat_state}")
 
     notify
 }
