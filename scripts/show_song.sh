@@ -61,6 +61,10 @@ check_app_state()
         app="Music"
         app_state="$(osascript -e "tell application \"Music\" to player state as string")"
         match="true"
+    elif [[ "$(osascript -e "application \"Spotify\" is running")" == "true" ]]; then
+        app="Spotify"
+        app_state="$(osascript -e "tell application \"Spotify\" to player state as string")"
+        match="true"
     fi
 
     [[ "${match}" != "true" ]] && \
